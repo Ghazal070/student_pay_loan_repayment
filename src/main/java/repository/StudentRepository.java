@@ -1,10 +1,12 @@
 package repository;
 
+import entity.BaseEntity;
 import entity.Student;
 
 import java.util.List;
 
-public interface StudentRepository extends PersonRepository<Student>{
-    List<Course> loadAllCourse(Integer uniqId);
-    List<Course> loadAllDepartmentCourse(Integer uniqId);
+public interface StudentRepository extends BaseEntityRepository<Student,Integer> {
+     Student login(String username, String password);
+    Student findByUsername(String username);
+
 }

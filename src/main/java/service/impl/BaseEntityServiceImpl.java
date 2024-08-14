@@ -18,7 +18,7 @@ public class BaseEntityServiceImpl<U extends BaseEntityRepository<T,ID>
 
     @Override
     public T save(T entity) {
-        T existEntity = repository.findByUniqId(entity.getUniqId());
+        T existEntity = repository.findById(entity.getId());
         if (existEntity==null)return repository.save(entity);
         else return existEntity;
     }
@@ -37,7 +37,7 @@ public class BaseEntityServiceImpl<U extends BaseEntityRepository<T,ID>
     }
 
     @Override
-    public T findById(Integer id) {
+    public T findById(ID id) {
         return repository.findById(id);
     }
 

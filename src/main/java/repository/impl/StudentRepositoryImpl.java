@@ -3,6 +3,7 @@ package repository.impl;
 import entity.Student;
 import entity.Student_;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
@@ -11,7 +12,7 @@ import repository.StudentRepository;
 
 import java.util.List;
 
-public class StudentRepositoryImpl extends PersonRepositoryImpl<Student> implements StudentRepository {
+public class StudentRepositoryImpl extends BaseEntityRepositoryImpl<Student,Integer> implements StudentRepository {
     public StudentRepositoryImpl(EntityManager entityManager) {
         super(entityManager);
     }
@@ -23,58 +24,31 @@ public class StudentRepositoryImpl extends PersonRepositoryImpl<Student> impleme
 
     @Override
     public String getUniqueFieldName() {
-        return Student_.UNIQ_ID;
+        return Student_.ID;
     }
 
     @Override
-    public List<Course> loadAllCourse(Integer uniqId) {
-        entityManager.getTransaction().begin();
-//        String query = """
-//                select c from Student s
-//                join Department d
-//                join Course c
-//                where s.id = ?1
-//                """;
-//        List<Course> resultList = entityManager.createQuery(query, Course.class)
-//                .setParameter(1, uniqId)
-//                .getResultList();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Course> query = criteriaBuilder.createQuery(Course.class);
-        Root<Student> studentRoot = query.from(Student.class);
-        Join<Student, Department> departmentJoin = studentRoot.join("department");
-        Join<Department, Course> courseJoin = departmentJoin.join("course");
-        query.select(courseJoin);
-        query.where(
-                criteriaBuilder.equal(studentRoot.get("id"), uniqId)
-        );
-        List<Course> resultList = entityManager.createQuery(query).getResultList();
-        entityManager.getTransaction().commit();
-        return resultList;
+    public Student login(String username, String password) {
+        String query = """
+                from %s p where p.username= ?1 and p.password= ?2
+                """.formatted(getEntityClass().getName());
+        TypedQuery<Student> typedQuery = entityManager.createQuery(query, getEntityClass());
+        typedQuery.setParameter(1, username);
+        typedQuery.setParameter(2, password);
+        List<Student> resultList = typedQuery.getResultList();
+        if(!resultList.isEmpty()) return resultList.get(0);
+        return null;
     }
 
     @Override
-    public List<Course> loadAllDepartmentCourse(Integer uniqId) {
-        //       entityManager.getTransaction().begin();
-//        String query = """
-//                select c from Student s
-//                join Department d
-//                join Course c
-//                where s.id = ?1
-//                """;
-//        List<Course> resultList = entityManager.createQuery(query, Course.class)
-//                .setParameter(1, uniqId)
-//                .getResultList();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Course> query = criteriaBuilder.createQuery(Course.class);
-        Root<Student> studentRoot = query.from(Student.class);
-        Join<Student, Department> departmentJoin = studentRoot.join("department");
-        Join<Department, Course> courseJoin = departmentJoin.join("courseList");
-        query.select(courseJoin);
-        query.where(
-                criteriaBuilder.equal(studentRoot.get("id"), uniqId)
-        );
-        return entityManager.createQuery(query).getResultList();
-//        entityManager.getTransaction().commit();
-
+    public Student findByUsername(String username) {
+        String query = """
+                from %s p where p.username= ?1
+                """.formatted(getEntityClass().getName());
+        TypedQuery<Student> typedQuery = entityManager.createQuery(query, getEntityClass());
+        typedQuery.setParameter(1, username);
+        List<Student> resultList = typedQuery.getResultList();
+        if(!resultList.isEmpty()) return resultList.get(0);
+        return null;
     }
 }

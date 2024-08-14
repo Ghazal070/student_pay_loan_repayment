@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.Set;
 
 @Getter
@@ -59,7 +60,17 @@ public class Student extends BaseEntity<Integer>{
         this.password = password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
+//    public String generatePassword() {
+//        Random random=new Random();
+//        StringBuilder stringBuilder = new StringBuilder();
+//        for (int i = 0;i<8;i++){
+//            int nextInt = random.nextInt();
+//            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*])(?=.*[0-9]).{8}$";
+//
+//            char  c = (char) nextInt;
+//        }
+//    }
+
+
 }

@@ -10,7 +10,7 @@ public interface BaseEntityRepository<T extends BaseEntity<ID>,ID  extends Seria
     T update (T newEntity);
     void delete (Integer id);
     Boolean containById(Integer id);
-    T findById(Integer id);
+    T findById(ID id);
     List<T> loadAll();
     Boolean contain(T entity);
     T findByUniqId(String uniqId);
