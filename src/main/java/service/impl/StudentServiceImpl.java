@@ -28,9 +28,9 @@ public class StudentServiceImpl extends BaseEntityServiceImpl<StudentRepository,
     @Override
     public Student save(Student entity) {
         entity.setUsername(entity.getNationalCode());
-        String password = generateSecurePassword(4);
+        String password = generateSecurePassword(8);
         entity.setPassword(password);
-        return super.save(entity);
+        return repository.save(entity);
     }
     public String generateSecurePassword(int length) {
         if (length < 4) {

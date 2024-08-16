@@ -1,6 +1,6 @@
 package menu.util;
 
-public class Massage {
+public class Message {
     private static final String invalidMassage = "Invalid input, Please enter number of desired item";
     private static final String inputMassage = "Please enter %s:";
     private static final String successfulMassage = "Dear %s operation is successful";

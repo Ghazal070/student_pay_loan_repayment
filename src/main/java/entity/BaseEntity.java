@@ -17,8 +17,9 @@ import java.io.Serializable;
 @SuperBuilder
 public abstract class BaseEntity<ID extends Serializable> implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private ID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
+    @SequenceGenerator(name = "seq_gen", sequenceName = "seq", allocationSize = 1)
+    protected ID id;
 
     @Override
     public String toString() {

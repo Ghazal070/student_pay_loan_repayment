@@ -2,23 +2,20 @@ package menu;
 
 import entity.*;
 import menu.util.Input;
-import menu.util.Massage;
+import menu.util.Message;
 import service.StudentService;
 import util.AuthHolder;
 
-import java.util.List;
-import java.util.Set;
-
-public class StudentLogin {
-    private final Input INPUT;
-    private final Massage MASSAGE;
+public class Signin {
+    private final Input input;
+    private final Message message;
     private final StudentService studentService;
     private final AuthHolder authHolder;
 
 
-    public StudentLogin(Input INPUT, Massage MASSAGE, StudentService studentService, AuthHolder authHolder) {
-        this.INPUT = INPUT;
-        this.MASSAGE = MASSAGE;
+    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder) {
+        this.input = input;
+        this.message = message;
         this.studentService = studentService;
         this.authHolder = authHolder;
     }
@@ -35,7 +32,7 @@ public class StudentLogin {
                     5- Previous Menu
                     6- Exit
                     """);
-            switch (INPUT.scanner.next()) {
+            switch (input.scanner.next()) {
                 case "1": {
                     Student studentById = studentService.findById(authHolder.tokenId);
                     System.out.println(studentById);
@@ -58,7 +55,7 @@ public class StudentLogin {
                     System.exit(0);
                 }
                 default:
-                    System.out.println(MASSAGE.getInvalidMassage());
+                    System.out.println(message.getInvalidMassage());
             }
 
         }

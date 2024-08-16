@@ -6,8 +6,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import menu.Menu;
+import menu.Signin;
+import menu.Signup;
 import menu.util.Input;
-import menu.util.Massage;
+import menu.util.Message;
 import repository.impl.*;
 import service.*;
 import repository.*;
@@ -25,10 +27,12 @@ public class ApplicationContext {
         getEntityManager();
         AuthHolder authHolder = new AuthHolder();
         Input input = new Input();
-        Massage massage = new Massage();
+        Message message = new Message();
         StudentRepository studentRepository = new StudentRepositoryImpl(em);
         StudentService studentService = new StudentServiceImpl(studentRepository);
-        menu = new Menu(input,studentService);
+        Signup signup =new Signup(input,studentService,message);
+        Signin signin =new Signin(input,message,studentService,authHolder);
+        menu = new Menu(input, message, signup, signin);
 
     }
 

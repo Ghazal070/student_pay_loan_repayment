@@ -5,7 +5,6 @@ import jakarta.annotation.Generated;
 import jakarta.persistence.metamodel.EntityType;
 import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.persistence.metamodel.StaticMetamodel;
-import java.time.LocalDate;
 
 @StaticMetamodel(Student.class)
 @Generated("org.hibernate.processor.HibernateProcessor")
@@ -69,7 +68,7 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	/**
 	 * @see entity.Student#birthDate
 	 **/
-	public static volatile SingularAttribute<Student, LocalDate> birthDate;
+	public static volatile SingularAttribute<Student, String> birthDate;
 	
 	/**
 	 * @see entity.Student#firstName

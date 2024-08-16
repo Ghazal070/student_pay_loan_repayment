@@ -3,10 +3,7 @@ package entity;
 
 import entity.enumration.Degree;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +14,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue("Student")
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -35,22 +31,24 @@ public class Student extends BaseEntity<Integer>{
     private  String motherName;
 
     @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "NationalCode must not Blank")
+    @Size(max=4,min = 4,message = "NationalCode number must be 4 characters")
     private String nationalCode;
 
     @Column
-    @Size(max = 8 ,min = 1)
+    @Size(max = 8, min = 1, message = "Certificate number must be between 1 and 8 characters")
     private  String certificateNumber;
 
     @Column
-    private LocalDate birthDate;
+    @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Birth date must be in the format YYYY-MM-DD")
+    private String birthDate;
 
     @Column(unique = true)
-    @NotBlank
+    @NotBlank(message = "username must not Blank")
     private String username;
 
     @Column
-    @NotBlank
+    @NotBlank(message = "password must not Blank")
     private String password;
 
     @Column
@@ -66,7 +64,7 @@ public class Student extends BaseEntity<Integer>{
     @Max(value = 2024,message = "start year must be smaller than or equal to {value}")
     private Integer entryYear;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private University university;
 
 

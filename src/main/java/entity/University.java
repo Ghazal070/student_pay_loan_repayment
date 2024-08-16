@@ -17,8 +17,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "acceptanceType"})
+})
 @SuperBuilder
 public class University extends BaseEntity<Integer> {
+
     @Column
     private String name;
 
