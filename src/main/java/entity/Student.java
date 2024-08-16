@@ -3,6 +3,10 @@ package entity;
 
 import entity.enumration.Degree;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,6 +18,8 @@ import java.util.Set;
 @Setter
 @Entity
 @DiscriminatorValue("Student")
+@NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 public class Student extends BaseEntity<Integer>{
 
@@ -29,48 +35,39 @@ public class Student extends BaseEntity<Integer>{
     private  String motherName;
 
     @Column(unique = true)
+    @NotBlank
     private String nationalCode;
 
     @Column
+    @Size(max = 8 ,min = 1)
     private  String certificateNumber;
 
     @Column
     private LocalDate birthDate;
 
     @Column(unique = true)
+    @NotBlank
     private String username;
 
     @Column
+    @NotBlank
     private String password;
 
     @Column
+    @Size(max = 3 ,min = 3)
     private  String studentNumber;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Degree degree;
 
     @Column
+    @Min(value = 1980, message = "start year must be greater than or equal to {value}")
+    @Max(value = 2024,message = "start year must be smaller than or equal to {value}")
     private Integer entryYear;
 
     @ManyToOne
     private University university;
-
-    public Student() {
-        this.username = nationalCode;
-        this.password = password;
-    }
-
-
-//    public String generatePassword() {
-//        Random random=new Random();
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (int i = 0;i<8;i++){
-//            int nextInt = random.nextInt();
-//            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*])(?=.*[0-9]).{8}$";
-//
-//            char  c = (char) nextInt;
-//        }
-//    }
 
 
 }

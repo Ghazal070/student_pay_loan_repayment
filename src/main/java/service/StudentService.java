@@ -9,4 +9,7 @@ public interface StudentService extends BaseEntityService<Student,Integer> {
 
     Student findByUsername(String username);
     Student login(String username, String password);
+
+    @Override
+    Student save(Student entity);
 }

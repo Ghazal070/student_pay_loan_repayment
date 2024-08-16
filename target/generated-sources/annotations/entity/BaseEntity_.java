@@ -10,14 +10,8 @@ import java.io.Serializable;
 @Generated("org.hibernate.processor.HibernateProcessor")
 public abstract class BaseEntity_ {
 
-	public static final String UNIQ_ID = "uniqId";
 	public static final String ID = "id";
 
-	
-	/**
-	 * @see entity.BaseEntity#uniqId
-	 **/
-	public static volatile SingularAttribute<BaseEntity, String> uniqId;
 	
 	/**
 	 * @see entity.BaseEntity#id
