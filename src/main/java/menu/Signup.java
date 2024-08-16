@@ -8,18 +8,21 @@ import entity.enumration.UniversityType;
 import menu.util.Input;
 import menu.util.Message;
 import service.StudentService;
-
-import java.time.LocalDate;
+import util.AuthHolder;
 
 public class Signup {
     private final Input input;
     private final StudentService studentService;
     private final Message message;
+    private final Signin signin;
+    private final AuthHolder authHolder;
 
-    public Signup(Input input, StudentService studentService, Message message) {
+    public Signup(Input input, StudentService studentService, Message message, Signin signin, AuthHolder authHolder) {
         this.input = input;
         this.studentService = studentService;
         this.message = message;
+        this.signin = signin;
+        this.authHolder = authHolder;
     }
 
     public void show() {
@@ -80,6 +83,9 @@ public class Signup {
                         System.out.println(message.getSuccessfulMassage(saveStudent.getFirstName()));
                         System.out.println("Your username is " + saveStudent.getUsername());
                         System.out.println("Your password is " + saveStudent.getPassword());
+                        authHolder.tokenId=saveStudent.getId();
+                        authHolder.tokenName=saveStudent.getUsername();
+                        signin.show();
                     } else {
                         System.out.println(message.getFailMassage("save student"));
                     }

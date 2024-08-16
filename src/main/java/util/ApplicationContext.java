@@ -30,8 +30,8 @@ public class ApplicationContext {
         Message message = new Message();
         StudentRepository studentRepository = new StudentRepositoryImpl(em);
         StudentService studentService = new StudentServiceImpl(studentRepository);
-        Signup signup =new Signup(input,studentService,message);
         Signin signin =new Signin(input,message,studentService,authHolder);
+        Signup signup =new Signup(input,studentService,message, signin, authHolder);
         menu = new Menu(input, message, signup, signin);
 
     }
