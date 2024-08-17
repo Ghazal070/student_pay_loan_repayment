@@ -32,11 +32,11 @@ public class Student extends BaseEntity<Integer>{
 
     @Column(unique = true)
     @NotBlank(message = "NationalCode must not Blank")
-    @Size(max=4,min = 4,message = "NationalCode number must be 4 characters")
+    @Size(max=3,min = 3,message = "NationalCode number must be 4 characters")
     private String nationalCode;
 
     @Column
-    @Size(max = 8, min = 1, message = "Certificate number must be between 1 and 8 characters")
+    @Size(max = 3, min = 1, message = "Certificate number must be between 1 and 8 characters")
     private  String certificateNumber;
 
     @Column
@@ -67,5 +67,8 @@ public class Student extends BaseEntity<Integer>{
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private University university;
 
+    //todo barresi shavad bad azloan
+    @ManyToMany
+    private Set<Term> terms;
 
 }

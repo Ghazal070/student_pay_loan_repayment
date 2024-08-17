@@ -2,7 +2,7 @@ package menu.util;
 
 public class Message {
     private static final String invalidMassage = "Invalid input, Please enter number of desired item";
-    private static final String inputMassage = "Please enter %s:";
+    private static final String inputMassage = "Please enter %s ";
     private static final String successfulMassage = "Dear %s operation is successful";
     private static final String ExistMessage = "%s is exist, Please choose different username";
     private static final String inCorrectMessage = "Username or password is incorrect";

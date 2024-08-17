@@ -1,21 +1,28 @@
 package menu;
 
+import entity.Student;
 import menu.util.Input;
 import menu.util.Message;
+import service.StudentService;
+import util.AuthHolder;
 
 public class Menu {
-    private final Input INPUT;
-    private final Message massage;
+    private final Input input;
+    private final Message message;
     private final Signup signup;
     private final Signin signin;
+    private final StudentService studentService;
+    private final AuthHolder authHolder;
 
 
-    public Menu(Input input, Message massage, Signup signup, Signin signin) {
+    public Menu(Input input, Message message, Signup signup, Signin signin, StudentService studentService, AuthHolder authHolder) {
 
-        this.INPUT = input;
-        this.massage = massage;
+        this.input = input;
+        this.message = message;
         this.signup = signup;
         this.signin = signin;
+        this.studentService = studentService;
+        this.authHolder = authHolder;
     }
 
     public void show() {
@@ -27,18 +34,26 @@ public class Menu {
                     1- Sign up  
                     2- Sign in 
                     """);
-            switch (INPUT.scanner.next()) {
+            switch (input.scanner.next()) {
                 case "1": {
                     signup.show();
                     break;
                 }
                 case "2": {
-                    //todo sout get user and pass for sign in
-                    signin.show();
+                    System.out.println(message.getInputMassage("username"));
+                    String username = input.scanner.next();
+                    System.out.println(message.getInputMassage("password"));
+                    String password = input.scanner.next();
+                    Student studentLogin = studentService.login(username, password);
+                    if (studentLogin != null) {
+                        authHolder.tokenId = studentLogin.getId();
+                        authHolder.tokenName = studentLogin.getUsername();
+                        signin.show();
+                    }else System.out.println(message.getFailMassage("Error in login"));
                     break;
                 }
                 default:
-                    System.out.println(massage.getInvalidMassage());
+                    System.out.println(message.getInvalidMassage());
             }
         }
 

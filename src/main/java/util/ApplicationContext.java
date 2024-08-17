@@ -32,7 +32,7 @@ public class ApplicationContext {
         StudentService studentService = new StudentServiceImpl(studentRepository);
         Signin signin =new Signin(input,message,studentService,authHolder);
         Signup signup =new Signup(input,studentService,message, signin, authHolder);
-        menu = new Menu(input, message, signup, signin);
+        menu = new Menu(input, message, signup, signin, studentService, authHolder);
 
     }
 

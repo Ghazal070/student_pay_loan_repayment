@@ -25,12 +25,10 @@ public class Signin {
         while (true) {
             System.out.println("""
                     Enter one of the following options
-                    1- Display information 
-                    2- Display all course
-                    3- Select course
-                    4- Display all student course with grade
-                    5- Previous Menu
-                    6- Exit
+                    1- Register Loan 
+                    2- Repayment Menu
+                    3- Previous Menu
+                    4- Exit
                     """);
             switch (input.scanner.next()) {
                 case "1": {
@@ -42,16 +40,9 @@ public class Signin {
                     break;
                 }
                 case "3": {
-                    break;
-                }
-                case "4": {
-
-                    break;
-                }
-                case "5": {
                     break StudentLoginMenu;
                 }
-                case "6": {
+                case "4": {
                     System.exit(0);
                 }
                 default:

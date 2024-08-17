@@ -35,11 +35,8 @@
           <entry name="$MAVEN_REPOSITORY$/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar" />
           <entry name="$MAVEN_REPOSITORY$/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar" />
         </processorPath>
-        <module name="student_pay_loan_repayment" />
+        <module name="HW16" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="student_pay_loan_repayment" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
