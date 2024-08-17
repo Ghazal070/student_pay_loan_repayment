@@ -10,5 +10,4 @@ public interface LoanService<T extends Loan> extends BaseEntityService<T,Integer
 
     Boolean isValidGetLoan(Student student);
     Boolean isAppropriateDate(LocalDate currentDate, Term studentTerm);
-    Boolean isAppropriateDate(Term studentTerm);
 }

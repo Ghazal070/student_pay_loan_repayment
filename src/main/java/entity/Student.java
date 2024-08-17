@@ -71,7 +71,7 @@ public class Student extends BaseEntity<Integer>{
     @ManyToMany
     private Set<Term> terms;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private City city;
 
     @Column

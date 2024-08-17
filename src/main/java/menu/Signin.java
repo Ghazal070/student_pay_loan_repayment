@@ -10,15 +10,15 @@ public class Signin {
     private final Message message;
     private final StudentService studentService;
     private final AuthHolder authHolder;
-    private final RegisterLoan registerLoan;
+    private final RegisterLoanMenu registerLoanMenu;
 
 
-    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder, RegisterLoan registerLoan) {
+    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder, RegisterLoanMenu registerLoanMenu) {
         this.input = input;
         this.message = message;
         this.studentService = studentService;
         this.authHolder = authHolder;
-        this.registerLoan = registerLoan;
+        this.registerLoanMenu = registerLoanMenu;
     }
 
     public void show() {
@@ -33,7 +33,7 @@ public class Signin {
                     """);
             switch (input.scanner.next()) {
                 case "1": {
-                    registerLoan.show();
+                    registerLoanMenu.show();
                     break;
                 }
                 case "2": {

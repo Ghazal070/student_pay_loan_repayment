@@ -6,7 +6,7 @@ import jakarta.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(HousingLoan.class)
 @Generated("org.hibernate.processor.HibernateProcessor")
-public abstract class HousingLoan_ extends entity.BaseEntity_ {
+public abstract class HousingLoan_ extends entity.loan.Loan_ {
 
 
 	

@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@Entity
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"student", "term"})
 })

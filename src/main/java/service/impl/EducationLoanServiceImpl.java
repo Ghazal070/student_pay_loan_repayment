@@ -16,6 +16,7 @@ public class EducationLoanServiceImpl extends LoanServiceImpl<EducationLoanRepos
 
     @Override
     public Boolean isValidGetLoan(Student student) {
+
         return null;
     }
 

@@ -8,7 +8,7 @@ import jakarta.persistence.metamodel.StaticMetamodel;
 
 @StaticMetamodel(EducationLoan.class)
 @Generated("org.hibernate.processor.HibernateProcessor")
-public abstract class EducationLoan_ extends entity.BaseEntity_ {
+public abstract class EducationLoan_ extends entity.loan.Loan_ {
 
 	public static final String TERM = "term";
 

@@ -32,9 +32,14 @@ public class RegisterLoanMenu {
         System.out.println(message.getInputMassage(" current title term"));
         String titleTerm = input.scanner.next();
         Term term = termService.findByUniqId(titleTerm);
-        Boolean isAppropriateDate = loanService.isAppropriateDate(
-                LocalDate.of(1402, 02, 03), term
-        );
+        Boolean isAppropriateDate=false;
+        if (term != null) {
+            isAppropriateDate = loanService.isAppropriateDate(
+                    LocalDate.of(1403,8,3), term
+//                    LocalDate.now(), term
+            );
+        }
+        if (!isAppropriateDate) System.out.println("LoanPay Service is available only 08-01/08-07 and 11-25/12-02 ");
 
         RegisterLoanMenu:
         while (isAppropriateDate) {

@@ -28,14 +28,14 @@ public class LoanServiceImpl<U extends LoanRepository<T>, T extends Loan>
         if (studentTerm.getTitle() != null) {
             char term = studentTerm.getTitle().charAt(studentTerm.getTitle().length() - 1);
             if (term == '1') {
-                LocalDate start = LocalDate.of(year, 07, 01);
-                LocalDate end = LocalDate.of(year, 07, 07);
+                LocalDate start = LocalDate.of(year, 8, 1);
+                LocalDate end = LocalDate.of(year, 8, 7);
                 if (currentDate.isAfter(start) && currentDate.isBefore(end)) {
                     return true;
                 }
             } else if (term == '2') {
                 LocalDate start = LocalDate.of(year, 11, 25);
-                LocalDate end = LocalDate.of(year, 12, 02);
+                LocalDate end = LocalDate.of(year, 12, 2);
                 if (currentDate.isAfter(start) && currentDate.isBefore(end)) {
                     return true;
                 }
@@ -45,26 +45,4 @@ public class LoanServiceImpl<U extends LoanRepository<T>, T extends Loan>
 
     }
 
-    @Override
-    public Boolean isAppropriateDate(Term studentTerm) {
-        LocalDate currentDate= LocalDate.now();
-        int year = currentDate.getYear();
-        if (studentTerm.getTitle() != null) {
-            char term = studentTerm.getTitle().charAt(studentTerm.getTitle().length() - 1);
-            if (term == '1') {
-                LocalDate start = LocalDate.of(year, 07, 01);
-                LocalDate end = LocalDate.of(year, 07, 07);
-                if (currentDate.isAfter(start) && currentDate.isBefore(end)) {
-                    return true;
-                }
-            } else if (term == '2') {
-                LocalDate start = LocalDate.of(year, 11, 25);
-                LocalDate end = LocalDate.of(year, 12, 02);
-                if (currentDate.isAfter(start) && currentDate.isBefore(end)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

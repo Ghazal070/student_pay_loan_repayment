@@ -2,11 +2,13 @@ package util;
 
 
 
+import entity.City;
+import entity.Term;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import menu.Menu;
-import menu.RegisterLoan;
+import menu.RegisterLoanMenu;
 import menu.Signin;
 import menu.Signup;
 import menu.util.Input;
@@ -40,8 +42,8 @@ public class ApplicationContext {
         StudentService studentService = new StudentServiceImpl(studentRepository);
         LoanRepository loanRepository =new LoanRepositoryImpl(em);
         LoanService loanService =new LoanServiceImpl(loanRepository);
-        RegisterLoan registerLoan =new RegisterLoan(input,message,studentService,authHolder,loanService, termService);
-        Signin signin =new Signin(input,message,studentService,authHolder, registerLoan);
+        RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService);
+        Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
         Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);
 
@@ -70,6 +72,35 @@ public class ApplicationContext {
 
     public Menu getMenu() {
         return menu;
+    }
+    public void createTerm(){
+        TermRepository termRepository = new TermRepositoryImpl(em);
+        TermService termService=new TermServiceImpl(termRepository);
+        termService.save(
+                Term.builder().title("1402-1").build()
+        );
+        termService.save(
+                Term.builder().title("1402-2").build()
+        );
+        termService.save(
+                Term.builder().title("1403-1").build()
+        );
+    }
+    public void createCity(){
+        CityRepository cityRepository = new CityRepositoryImpl(em);
+        CityService cityService=new CityServiceImpl(cityRepository);
+        cityService.save(
+                City.builder().name("Tehran").build()
+        );
+        cityService.save(
+                City.builder().name("Gilan").isBigCity(true).build()
+        );
+        cityService.save(
+                City.builder().name("Isfahan").isBigCity(true).build()
+        );
+        cityService.save(
+                City.builder().name("Natanz").build()
+        );
     }
 
 }
