@@ -1,6 +1,5 @@
 package menu;
 
-import entity.*;
 import menu.util.Input;
 import menu.util.Message;
 import service.StudentService;
@@ -11,13 +10,15 @@ public class Signin {
     private final Message message;
     private final StudentService studentService;
     private final AuthHolder authHolder;
+    private final RegisterLoan registerLoan;
 
 
-    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder) {
+    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder, RegisterLoan registerLoan) {
         this.input = input;
         this.message = message;
         this.studentService = studentService;
         this.authHolder = authHolder;
+        this.registerLoan = registerLoan;
     }
 
     public void show() {
@@ -32,8 +33,7 @@ public class Signin {
                     """);
             switch (input.scanner.next()) {
                 case "1": {
-                    Student studentById = studentService.findById(authHolder.tokenId);
-                    System.out.println(studentById);
+                    registerLoan.show();
                     break;
                 }
                 case "2": {
