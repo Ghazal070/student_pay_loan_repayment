@@ -1,12 +1,13 @@
 package menu;
 
+import entity.City;
 import entity.Student;
 import entity.University;
-import entity.enumration.AcceptanceType;
 import entity.enumration.Degree;
 import entity.enumration.UniversityType;
 import menu.util.Input;
 import menu.util.Message;
+import service.CityService;
 import service.StudentService;
 import util.AuthHolder;
 
@@ -16,13 +17,15 @@ public class Signup {
     private final Message message;
     private final Signin signin;
     private final AuthHolder authHolder;
+    private final CityService cityService;
 
-    public Signup(Input input, StudentService studentService, Message message, Signin signin, AuthHolder authHolder) {
+    public Signup(Input input, StudentService studentService, Message message, Signin signin, AuthHolder authHolder, CityService cityService) {
         this.input = input;
         this.studentService = studentService;
         this.message = message;
         this.signin = signin;
         this.authHolder = authHolder;
+        this.cityService = cityService;
     }
 
     public void show() {
@@ -45,20 +48,32 @@ public class Signup {
                     String birthDate = getInputData("Birth date must be in the format YYYY-MM-DD");
                     String entryYear = getInputData("entryYear(1990)");
                     String universityName = getInputData("UniversityName");
+                    String isDormitory = getInputData("isDormitory (yes/no)");
+                    Boolean isMarriedBoolean = getYesNo(isDormitory);
+                    String isMarried = getInputData("isMarried (yes/no)");
+                    Boolean isDormitoryBoolean = getYesNo(isMarried);
+                    String partnerNationalCode = getInputData("partnerNationalCode");
+                    String cityName = getInputData("city Name");
+                    City city =cityService.findByUniqId(cityName);
                     String degreeInput = getInputData("""
                             Please enter degree from below: Associate, ContinuousBachelor,
                             DiscontinuousBachelor,ContinuousMaster, DiscontinuousMaster,
                             ContinuousPhD,DisContinuousPhD, ProfessionalPHD
                             """);
-                    String universityTypeInput = getInputData("Please enter UniversityType: Azad, Governmental");
-                    String acceptanceTypeInput = getInputData("Please enter AcceptanceType: Daily, Nightly");
+                    String universityTypeInput = getInputData("""
+                            Please enter UniversityType:
+                            Azad, DolatiShabane, DolatiRuzane,PayameNur,
+                            GHeirEntefaee,Pardis,Mazad,ElmiKarbordi
+                            """);
                     Degree degree = getEnumFromString(Degree.class, degreeInput);
                     UniversityType universityType = getEnumFromString(UniversityType.class, universityTypeInput);
-                    AcceptanceType acceptanceType = getEnumFromString(AcceptanceType.class, acceptanceTypeInput);
 
-                    if (degree == null || universityType == null || acceptanceType == null) {
+                    if (degree == null || universityType == null) {
                         System.out.println("One or more inputs were invalid. Please try again.");
                         break;
+                    }
+                    if (city==null){
+                        city= City.builder().name(cityName).build();
                     }
                     Student student = Student.builder()
                             .firstName(firstname)
@@ -71,10 +86,13 @@ public class Signup {
                             .studentNumber(studentNumber)
                             .degree(degree)
                             .entryYear(Integer.valueOf(entryYear))
+                            .isMarried(isMarriedBoolean)
+                            .isDormitory(isDormitoryBoolean)
+                            .city(city)
+                            .partnerNationalCode(partnerNationalCode)
                             .university(University.builder()
                                     .name(universityName)
                                     .universityType(universityType)
-                                    .acceptanceType(acceptanceType)
                                     .build())
                             .build();
 
@@ -83,8 +101,8 @@ public class Signup {
                         System.out.println(message.getSuccessfulMassage(saveStudent.getFirstName()));
                         System.out.println("Your username is " + saveStudent.getUsername());
                         System.out.println("Your password is " + saveStudent.getPassword());
-                        authHolder.tokenId=saveStudent.getId();
-                        authHolder.tokenName=saveStudent.getUsername();
+                        authHolder.tokenId = saveStudent.getId();
+                        authHolder.tokenName = saveStudent.getUsername();
                         signin.show();
                     } else {
                         System.out.println(message.getFailMassage("save student"));
@@ -104,6 +122,12 @@ public class Signup {
         System.out.println(message.getInputMassage(prompt));
         return input.scanner.next();
     }
+
+    private Boolean getYesNo(String prompt) {
+        if (prompt.equals("yes")) return true;
+        return false;
+    }
+
     public <E extends Enum<E>> E getEnumFromString(Class<E> enumClass, String value) {
         try {
             return Enum.valueOf(enumClass, value);

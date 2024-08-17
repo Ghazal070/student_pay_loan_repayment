@@ -71,4 +71,16 @@ public class Student extends BaseEntity<Integer>{
     @ManyToMany
     private Set<Term> terms;
 
+    @ManyToOne
+    private City city;
+
+    @Column
+    private Boolean isDormitory;
+
+    @Column
+    private Boolean isMarried;
+
+    @Column
+    private String partnerNationalCode;
+
 }

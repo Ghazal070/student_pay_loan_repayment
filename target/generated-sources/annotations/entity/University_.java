@@ -1,6 +1,5 @@
 package entity;
 
-import entity.enumration.AcceptanceType;
 import entity.enumration.UniversityType;
 import jakarta.annotation.Generated;
 import jakarta.persistence.metamodel.EntityType;
@@ -15,7 +14,6 @@ public abstract class University_ extends entity.BaseEntity_ {
 	public static final String UNIVERSITY_TYPE = "universityType";
 	public static final String NAME = "name";
 	public static final String STUDENTS = "students";
-	public static final String ACCEPTANCE_TYPE = "acceptanceType";
 
 	
 	/**
@@ -37,11 +35,6 @@ public abstract class University_ extends entity.BaseEntity_ {
 	 * @see entity.University
 	 **/
 	public static volatile EntityType<University> class_;
-	
-	/**
-	 * @see entity.University#acceptanceType
-	 **/
-	public static volatile SingularAttribute<University, AcceptanceType> acceptanceType;
 
 }
 

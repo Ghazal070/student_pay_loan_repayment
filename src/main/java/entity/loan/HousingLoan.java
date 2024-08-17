@@ -1,6 +1,11 @@
 package entity.loan;
 
+import entity.City;
+import entity.Term;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,31 +16,18 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @SuperBuilder
 public class HousingLoan extends Loan {
 
     @Override
     public void loanAmount() {
-        switch (student.getDegree()) {
-            case Associate:
-            case ContinuousBachelor:
-            case DiscontinuousBachelor: {
-                this.amount = 1_300_000;
-                break;
-            }
-            case DiscontinuousMaster:
-            case ContinuousMaster:
-            case ContinuousPhD:
-            case DisContinuousPhD: {
-                this.amount = 2_600_000;
-                break;
-            }
-            case ProfessionalPHD:{
-                this.amount = 6_500_000;
-                break;
-            }
+        if (student.getCity().getName().equals("Tehran")) {
+            this.amount = 32_000_000;
+        } else if (student.getCity().getIsBigCity()) {
+            this.amount = 26_000_000;
 
+        } else {
+            this.amount = 19_500_000;
         }
     }
 

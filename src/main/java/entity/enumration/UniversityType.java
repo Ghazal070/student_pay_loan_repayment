@@ -2,6 +2,7 @@ package entity.enumration;
 
 public enum UniversityType {
 
-    Azad, Governmental;
+    Azad, DolatiShabane, DolatiRuzane,PayameNur
+    ,GHeirEntefaee,Pardis,Mazad,ElmiKarbordi
 
 }

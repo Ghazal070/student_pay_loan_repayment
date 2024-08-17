@@ -3,6 +3,7 @@ package entity.loan;
 import entity.Term;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class EducationLoan extends Loan {
+
     @OneToOne
+    @NotBlank
     protected Term term;
 
     @Override

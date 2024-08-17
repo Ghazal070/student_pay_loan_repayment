@@ -13,6 +13,7 @@ import menu.util.Message;
 import repository.impl.*;
 import service.*;
 import repository.*;
+import service.impl.CityServiceImpl;
 import service.impl.StudentServiceImpl;
 
 
@@ -29,9 +30,11 @@ public class ApplicationContext {
         Input input = new Input();
         Message message = new Message();
         StudentRepository studentRepository = new StudentRepositoryImpl(em);
+        CityRepository cityRepository = new CityRepositoryImpl(em);
+        CityService cityService = new CityServiceImpl(cityRepository);
         StudentService studentService = new StudentServiceImpl(studentRepository);
         Signin signin =new Signin(input,message,studentService,authHolder);
-        Signup signup =new Signup(input,studentService,message, signin, authHolder);
+        Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);
 
     }
