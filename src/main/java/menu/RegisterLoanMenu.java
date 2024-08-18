@@ -1,15 +1,14 @@
 package menu;
 
-import entity.Term;
+import entity.Bank;
+import entity.CreditCard;
 import menu.util.Input;
 import menu.util.Message;
-import service.EducationLoanService;
-import service.LoanService;
-import service.StudentService;
-import service.TermService;
+import service.*;
 import util.AuthHolder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class RegisterLoanMenu {
     private final Input input;
@@ -19,9 +18,11 @@ public class RegisterLoanMenu {
     private final LoanService loanService;
     private final TermService termService;
     private final EducationLoanService educationLoanService;
+    private final BankService bankService;
+    private final CreditCardService creditCardService;
 
 
-    public RegisterLoanMenu(Input input, Message message, StudentService studentService, AuthHolder authHolder, LoanService loanService, TermService termService, EducationLoanService educationLoanService) {
+    public RegisterLoanMenu(Input input, Message message, StudentService studentService, AuthHolder authHolder, LoanService loanService, TermService termService, EducationLoanService educationLoanService, BankService bankService, CreditCardService creditCardService) {
         this.input = input;
         this.message = message;
         this.studentService = studentService;
@@ -29,6 +30,8 @@ public class RegisterLoanMenu {
         this.loanService = loanService;
         this.termService = termService;
         this.educationLoanService = educationLoanService;
+        this.bankService = bankService;
+        this.creditCardService = creditCardService;
     }
 
     public void show() {
@@ -52,7 +55,15 @@ public class RegisterLoanMenu {
                 case "1": {
                     Boolean validGetLoan = educationLoanService.isValidGetLoan(localDateNow);
                     if(validGetLoan){
-                        System.out.println();//todo shomareKart
+                        List<Bank> banks = bankService.loadAll();
+                        System.out.println("Bank List:");
+                        if (!banks.isEmpty()) banks.forEach(System.out::println);
+                        String creditCardNumber = getInputData("creditCardNumber");
+//                        creditCardService.save(
+//                                CreditCard.builder().creditCardNumber(creditCardNumber).bank(
+//                                        n
+//                                )
+//                        )
                         System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                     }
                     break;
@@ -77,10 +88,9 @@ public class RegisterLoanMenu {
         }
     }
 
-    private Term getCurrentTerm() {
-        System.out.println(message.getInputMassage(" current title term"));
-        String titleTerm = input.scanner.next();
-        Term term = termService.findByUniqId(titleTerm);
-        return term;
+    public String getInputData(String prompt) {
+        System.out.println(message.getInputMassage(prompt));
+        return input.scanner.next();
     }
+
 }

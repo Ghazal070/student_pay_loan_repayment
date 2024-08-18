@@ -126,7 +126,7 @@ public class Signup {
         }
     }
 
-    private String getInputData(String prompt) {
+    public String getInputData(String prompt) {
         System.out.println(message.getInputMassage(prompt));
         return input.scanner.next();
     }
