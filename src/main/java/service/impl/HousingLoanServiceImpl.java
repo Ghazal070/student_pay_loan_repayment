@@ -20,5 +20,19 @@ public class HousingLoanServiceImpl extends LoanServiceImpl<HousingLoanRepositor
     public Boolean isValidGetLoan(LocalDate currentDate) {
         return null;
     }
+    @Override
+    public Integer loanAmount(Student student) {
+        Integer amount=null;
+        if (student.getCity().getName().equals("Tehran")) {
+            amount = 32_000_000;
+        } else if (student.getCity().getIsBigCity()) {
+            amount = 26_000_000;
+
+        } else {
+            amount = 19_500_000;
+        }
+        return amount;
+    }
+
 
 }

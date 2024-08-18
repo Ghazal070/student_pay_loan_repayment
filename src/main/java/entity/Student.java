@@ -31,8 +31,9 @@ public class Student extends BaseEntity<Integer>{
     private  String motherName;
 
     @Column(unique = true)
-    @NotBlank(message = "NationalCode must not Blank")
-    @Size(max=3,min = 3,message = "NationalCode number must be 4 characters")
+    @NotBlank(message = "NationalCode must not be Blank")
+    @Size(max = 3, min = 3, message = "NationalCode number must be exactly 3 characters")
+    @Pattern(regexp = "\\d{3}", message = "NationalCode must be exactly 3 digits")
     private String nationalCode;
 
     @Column

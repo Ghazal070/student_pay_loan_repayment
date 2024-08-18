@@ -19,4 +19,11 @@ public class Bank extends BaseEntity<Integer> {
     @Column
     @Size(max=10,min = 3,message = "Name Bank must be 10 characters")
     private  String name;
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "name='" + name + '\'' +
+                "} ";
+    }
 }

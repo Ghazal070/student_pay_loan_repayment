@@ -1,6 +1,7 @@
 package service.impl;
 
 
+import entity.Student;
 import entity.Term;
 import entity.loan.Loan;
 import repository.LoanRepository;
@@ -39,11 +40,16 @@ public class LoanServiceImpl<U extends LoanRepository<T>, T extends Loan>
 
     @Override
     public String convertDateToTitleTerm(LocalDate currentDate) {
-        StringBuilder titleTerm =new StringBuilder(currentDate.getYear());
+        StringBuilder titleTerm =new StringBuilder();
+        titleTerm.append(currentDate.getYear());
         int month = currentDate.getMonthValue();
         if (month<=10 && month>=6) titleTerm.append("-1");
         if (month>10 && month<6)titleTerm.append("-2");
         return String.valueOf(titleTerm);
     }
 
+    @Override
+    public Integer loanAmount(Student student) {
+        return null;
+    }
 }

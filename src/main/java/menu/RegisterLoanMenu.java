@@ -2,6 +2,10 @@ package menu;
 
 import entity.Bank;
 import entity.CreditCard;
+import entity.Student;
+import entity.Term;
+import entity.loan.EducationLoan;
+import exception.ValidationException;
 import menu.util.Input;
 import menu.util.Message;
 import service.*;
@@ -38,11 +42,12 @@ public class RegisterLoanMenu {
         LocalDate localDateNow = LocalDate.of(1403, 8, 3);
         //                    LocalDate.now()
         Boolean isAppropriateDate = loanService.isAppropriateDate(localDateNow);
-
         if (!isAppropriateDate) System.out.println("LoanPay Service is available only 08-01/08-07 and 11-25/12-02 ");
         RegisterLoanMenu:
         while (isAppropriateDate) {
-
+            String titleTerm = loanService.convertDateToTitleTerm(localDateNow);
+            Term currentTerm = termService.findByUniqId(titleTerm);
+            Student student = studentService.findByUsername(authHolder.tokenName);
             System.out.println("""
                     Enter one of the following options
                     1- Register EducationLoan
@@ -53,18 +58,42 @@ public class RegisterLoanMenu {
                     """);
             switch (input.scanner.next()) {
                 case "1": {
-                    Boolean validGetLoan = educationLoanService.isValidGetLoan(localDateNow);
-                    if(validGetLoan){
-                        List<Bank> banks = bankService.loadAll();
-                        System.out.println("Bank List:");
-                        if (!banks.isEmpty()) banks.forEach(System.out::println);
-                        String creditCardNumber = getInputData("creditCardNumber");
-//                        creditCardService.save(
-//                                CreditCard.builder().creditCardNumber(creditCardNumber).bank(
-//                                        n
-//                                )
-//                        )
-                        System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                    try {
+                        Boolean validGetLoan = educationLoanService.isValidGetLoan(localDateNow);
+                        if (validGetLoan) {
+                            List<Bank> banks = bankService.loadAll();
+                            System.out.println("Bank List:");
+                            if (!banks.isEmpty()) banks.forEach(System.out::println);
+                            String bankName = getInputData("bankName");
+                            List<Bank> bankList = banks.stream()
+                                    .filter(a -> a.getName().equals(bankName))
+                                    .toList();
+                            if (bankList.get(0) != null) {
+                                String creditCardNumber = getInputData("creditCardNumber");
+                                CreditCard creditCard = creditCardService.save(
+                                        CreditCard.builder().creditCardNumber(creditCardNumber).bank(
+                                                bankList.get(0)
+                                        ).build()
+                                );
+                                if (creditCard != null) {
+                                    EducationLoan educationLoan = educationLoanService.save(
+                                            EducationLoan.builder()
+                                                    .term(currentTerm)
+                                                    .student(student)
+                                                    .amount(educationLoanService
+                                                            .loanAmount(student))
+                                                    .build()
+                                    );
+                                    if (educationLoan != null)
+                                        System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                }
+
+                            } else System.out.println("Please enter bank name from above list ");
+                        } else System.out.println("You are not validate for loan");
+                    } catch (ValidationException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (RuntimeException e) {
+                        System.out.println("An unexpected error occurred: " + e.getMessage());
                     }
                     break;
                 }

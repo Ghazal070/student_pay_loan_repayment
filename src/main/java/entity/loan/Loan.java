@@ -17,10 +17,11 @@ import lombok.experimental.SuperBuilder;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"student", "term"})
 })
-@Inheritance
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 @NoArgsConstructor
 @SuperBuilder
-public  abstract class Loan extends BaseEntity<Integer> {
+public class Loan extends BaseEntity<Integer> {
     @Column
     @NotBlank
     protected Integer amount;
@@ -31,6 +32,6 @@ public  abstract class Loan extends BaseEntity<Integer> {
 
     //todo factory method
 
-    public abstract void loanAmount();
+
 
 }

@@ -27,7 +27,7 @@ public class EducationLoanRepositoryImpl extends LoanRepositoryImpl<EducationLoa
     }
     @Override
     public List<Loan> getLoanInCurrentTerm(Term currentTerm) {
-        String query = "from loan where dtype=?1 and student_id=?2 and term_id =3? ";
+        String query = "from EducationLoan  l where l.student.id=?1 and l.term.id =?2 ";
         TypedQuery<Loan> query1 = entityManager.createQuery(query, Loan.class);
         query1.setParameter(1,authHolder.tokenId);
         query1.setParameter(2,currentTerm.getId());
