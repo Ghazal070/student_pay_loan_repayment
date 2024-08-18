@@ -17,6 +17,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Bank extends BaseEntity<Integer> {
     @Column
-    @Size(max=6,min = 6,message = "Name Bank must be 6 characters")
+    @Size(max=10,min = 3,message = "Name Bank must be 10 characters")
     private  String name;
 }

@@ -2,6 +2,7 @@ package util;
 
 
 
+import entity.Bank;
 import entity.City;
 import entity.Term;
 import jakarta.persistence.EntityManager;
@@ -99,6 +100,22 @@ public class ApplicationContext {
         );
         cityService.save(
                 City.builder().name("Natanz").build()
+        );
+    }
+    public void createBank(){
+        BankRepository bankRepository =new BankRepositoryImpl(em);
+        BankService bankService = new BankServiceImpl(bankRepository);
+        bankRepository.save(
+                Bank.builder().name("Melli").build()
+        );
+        bankRepository.save(
+                Bank.builder().name("Maskan").build()
+        );
+        bankRepository.save(
+                Bank.builder().name("Tejarat").build()
+        );
+        bankRepository.save(
+                Bank.builder().name("Refah").build()
         );
     }
 

@@ -8,9 +8,10 @@ public class App {
 
     public static void main(String[] args) {
 
-        ApplicationContext.getINSTANCE().getMenu().show();
+//        ApplicationContext.getINSTANCE().getMenu().show();
         //ApplicationContext.getINSTANCE().createTerm();
         //ApplicationContext.getINSTANCE().createCity();
+        ApplicationContext.getINSTANCE().createBank();
 
     }
 

@@ -3,7 +3,6 @@ package entity;
 import entity.enumration.Degree;
 import jakarta.annotation.Generated;
 import jakarta.persistence.metamodel.EntityType;
-import jakarta.persistence.metamodel.SetAttribute;
 import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.persistence.metamodel.StaticMetamodel;
 
@@ -26,7 +25,6 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	public static final String FIRST_NAME = "firstName";
 	public static final String PASSWORD = "password";
 	public static final String CERTIFICATE_NUMBER = "certificateNumber";
-	public static final String TERMS = "terms";
 	public static final String USERNAME = "username";
 	public static final String PARTNER_NATIONAL_CODE = "partnerNationalCode";
 
@@ -105,11 +103,6 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	 * @see entity.Student#certificateNumber
 	 **/
 	public static volatile SingularAttribute<Student, String> certificateNumber;
-	
-	/**
-	 * @see entity.Student#terms
-	 **/
-	public static volatile SetAttribute<Student, Term> terms;
 	
 	/**
 	 * @see entity.Student
