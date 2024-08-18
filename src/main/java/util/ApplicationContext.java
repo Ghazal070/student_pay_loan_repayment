@@ -16,10 +16,7 @@ import menu.util.Message;
 import repository.impl.*;
 import service.*;
 import repository.*;
-import service.impl.CityServiceImpl;
-import service.impl.LoanServiceImpl;
-import service.impl.StudentServiceImpl;
-import service.impl.TermServiceImpl;
+import service.impl.*;
 
 
 public class ApplicationContext {
@@ -38,11 +35,13 @@ public class ApplicationContext {
         CityRepository cityRepository = new CityRepositoryImpl(em);
         TermRepository termRepository =new TermRepositoryImpl(em);
         TermService termService =new TermServiceImpl(termRepository);
+        EducationLoanRepository educationLoanRepository =new EducationLoanRepositoryImpl(em,authHolder);
         CityService cityService = new CityServiceImpl(cityRepository);
         StudentService studentService = new StudentServiceImpl(studentRepository);
-        LoanRepository loanRepository =new LoanRepositoryImpl(em);
+        LoanRepository loanRepository =new LoanRepositoryImpl(em, authHolder);
         LoanService loanService =new LoanServiceImpl(loanRepository);
-        RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService);
+        EducationLoanService educationLoanService =new EducationLoanServiceImpl(educationLoanRepository,termService,loanService)
+        RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService, educationLoanService);
         Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
         Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);

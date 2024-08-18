@@ -60,16 +60,13 @@ public class Student extends BaseEntity<Integer>{
     private Degree degree;
 
     @Column
-    @Min(value = 1980, message = "start year must be greater than or equal to {value}")
-    @Max(value = 2024,message = "start year must be smaller than or equal to {value}")
+    @Min(value = 1350, message = "start year must be greater than or equal to {value}")
+    @Max(value = 1404,message = "start year must be smaller than or equal to {value}")
     private Integer entryYear;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private University university;
 
-    //todo barresi shavad bad azloan
-    @ManyToMany
-    private Set<Term> terms;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private City city;

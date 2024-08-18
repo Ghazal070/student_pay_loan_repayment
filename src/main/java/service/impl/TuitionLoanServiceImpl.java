@@ -9,6 +9,8 @@ import repository.TuitionLoanRepository;
 import service.LoanService;
 import service.TuitionLoanService;
 
+import java.time.LocalDate;
+
 
 public class TuitionLoanServiceImpl extends LoanServiceImpl<TuitionLoanRepository, TuitionLoan> implements TuitionLoanService {
 
@@ -18,7 +20,7 @@ public class TuitionLoanServiceImpl extends LoanServiceImpl<TuitionLoanRepositor
     }
 
     @Override
-    public Boolean isValidGetLoan(Student student) {
+    public Boolean isValidGetLoan(LocalDate currentDate) {
         return null;
     }
 

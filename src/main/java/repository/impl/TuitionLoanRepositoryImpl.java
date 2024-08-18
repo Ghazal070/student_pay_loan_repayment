@@ -1,15 +1,14 @@
 package repository.impl;
 
-import entity.loan.Loan;
 import entity.loan.TuitionLoan;
 import entity.loan.TuitionLoan_;
 import jakarta.persistence.EntityManager;
-import repository.LoanRepository;
 import repository.TuitionLoanRepository;
+import util.AuthHolder;
 
 public class TuitionLoanRepositoryImpl extends LoanRepositoryImpl<TuitionLoan> implements TuitionLoanRepository {
-    public TuitionLoanRepositoryImpl(EntityManager entityManager) {
-        super(entityManager);
+    public TuitionLoanRepositoryImpl(EntityManager entityManager, AuthHolder authHolder) {
+        super(entityManager, authHolder);
     }
 
     @Override
