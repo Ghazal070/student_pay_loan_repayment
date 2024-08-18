@@ -40,7 +40,7 @@ public class ApplicationContext {
         StudentService studentService = new StudentServiceImpl(studentRepository);
         LoanRepository loanRepository =new LoanRepositoryImpl(em, authHolder);
         LoanService loanService =new LoanServiceImpl(loanRepository);
-        EducationLoanService educationLoanService =new EducationLoanServiceImpl(educationLoanRepository,termService,loanService)
+        EducationLoanService educationLoanService =new EducationLoanServiceImpl(educationLoanRepository,termService,loanService);
         RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService, educationLoanService);
         Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
         Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);

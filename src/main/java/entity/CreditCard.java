@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +16,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Bank extends BaseEntity<Integer> {
+public class CreditCard extends BaseEntity<Integer>{
+
     @Column
-    @Size(max=6,min = 6,message = "Name Bank must be 6 characters")
-    private  String name;
+    @Size(max=10,min = 10,message = "Credit card  must be 10 characters")
+    private String creditCardNumber;
+
+    @ManyToOne
+    private Bank bank;
+
+    @Column
+    private Integer balance;
+
 }
