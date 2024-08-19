@@ -5,6 +5,7 @@ import entity.CreditCard;
 import entity.Student;
 import entity.Term;
 import entity.loan.EducationLoan;
+import entity.loan.HousingLoan;
 import entity.loan.TuitionLoan;
 import exception.ValidationException;
 import menu.util.Input;
@@ -186,7 +187,7 @@ public class RegisterLoanMenu {
                                 }
 
                             }
-                        } else System.out.println("You have register for educational loan in this term");
+                        } else System.out.println("You have register for tuition loan in this term");
                     } catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {
@@ -237,22 +238,21 @@ public class RegisterLoanMenu {
                                     System.out.println(message.getInvalidMassage());
                             }
                             if (creditCard != null) {
-                                Integer loanAmount = tuitionLoanService.loanAmount(student);
-                                TuitionLoan tuitionLoan = tuitionLoanService.save(
-                                        TuitionLoan.builder()
+                                Integer loanAmount = housingLoanService.loanAmount(student);
+                                HousingLoan housingLoan = housingLoanService.save(
+                                        HousingLoan.builder()
                                                 .student(student)
-                                                .term(currentTerm)
                                                 .amount(loanAmount)
                                                 .build()
                                 );
-                                if (tuitionLoan != null) {
+                                if (housingLoan != null) {
                                     creditCard.setBalance(creditCard.getBalance()+loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                                 }
 
                             }
-                        } else System.out.println("You have register for educational loan in this term");
+                        } else System.out.println("You have register for housing loan in this term");
                     } catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {

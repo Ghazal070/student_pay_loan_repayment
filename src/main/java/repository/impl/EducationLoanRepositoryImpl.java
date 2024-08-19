@@ -30,8 +30,6 @@ public class EducationLoanRepositoryImpl extends LoanRepositoryImpl<EducationLoa
         TypedQuery<EducationLoan> query1 = entityManager.createQuery(query, EducationLoan.class);
         query1.setParameter(1,authHolder.tokenId);
         query1.setParameter(2,currentTerm.getId());
-        List<EducationLoan> resultList = query1.getResultList();
-       resultList.forEach(System.out::println);
         return query1.getResultList();
     }
 }

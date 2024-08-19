@@ -49,7 +49,7 @@ public class ApplicationContext {
         CreditCardService creditCardService =new CreditCardServiceImpl(creditCardRepository);
         EducationLoanService educationLoanService =new EducationLoanServiceImpl(educationLoanRepository,termService,loanService);
         HousingLoanRepository housingLoanRepository =new HousingLoanRepositoryImpl(em,authHolder);
-        HousingLoanService housingLoanService =new HousingLoanServiceImpl(housingLoanRepository);
+        HousingLoanService housingLoanService =new HousingLoanServiceImpl(housingLoanRepository, termService, loanService, authHolder, studentService);
         RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService,
                 educationLoanService, bankService, creditCardService, tuitionLoanService, housingLoanService);
         Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
