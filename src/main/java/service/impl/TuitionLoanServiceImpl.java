@@ -3,12 +3,13 @@ package service.impl;
 
 import entity.Student;
 import entity.Term;
-import entity.loan.Loan;
 import entity.loan.TuitionLoan;
 import repository.TuitionLoanRepository;
 import service.LoanService;
+import service.StudentService;
 import service.TermService;
 import service.TuitionLoanService;
+import util.AuthHolder;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -19,10 +20,15 @@ public class TuitionLoanServiceImpl extends LoanServiceImpl<TuitionLoanRepositor
 
     private final TermService termService;
     private final LoanService loanService;
-    public TuitionLoanServiceImpl(TuitionLoanRepository repository, TermService termService, LoanService loanService) {
+    private final AuthHolder authHolder;
+    private final StudentService studentService;
+
+    public TuitionLoanServiceImpl(TuitionLoanRepository repository, TermService termService, LoanService loanService, AuthHolder authHolder, StudentService studentService) {
         super(repository);
         this.termService = termService;
         this.loanService = loanService;
+        this.authHolder = authHolder;
+        this.studentService = studentService;
     }
 
 
@@ -32,17 +38,22 @@ public class TuitionLoanServiceImpl extends LoanServiceImpl<TuitionLoanRepositor
         terms.sort(Comparator.comparing(Term::getTitle));
         Term currentTerm = terms.get(terms.size() - 1);
         String termTitle = loanService.convertDateToTitleTerm(currentDate);
-        if (currentTerm.getTitle().equals(termTitle)){
-            List<Loan> loans = repository.getLoanInCurrentTerm(currentTerm);
-            if (loans==null && loans.isEmpty()){
-                return false;
+        if (currentTerm.getTitle().equals(termTitle)) {
+            List<TuitionLoan> loans = repository.getLoanInCurrentTerm(currentTerm);
+            if (loans.size() == 0) {
+                Student student = studentService.findById(authHolder.tokenId);
+                boolean dolatiRuzane = student.getUniversity().getUniversityType().equals("DolatiRuzane");
+                if (!dolatiRuzane) {
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
     }
+
     @Override
     public Integer loanAmount(Student student) {
-        Integer amount=null;
+        Integer amount = null;
         switch (student.getDegree()) {
             case Associate:
             case ContinuousBachelor:
@@ -57,7 +68,7 @@ public class TuitionLoanServiceImpl extends LoanServiceImpl<TuitionLoanRepositor
                 amount = 2_250_000;
                 break;
             }
-            case ProfessionalPHD:{
+            case ProfessionalPHD: {
                 amount = 2_600_000;
                 break;
             }

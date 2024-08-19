@@ -1,7 +1,6 @@
 package repository.impl;
 
 import entity.Term;
-import entity.loan.Loan;
 import entity.loan.TuitionLoan;
 import entity.loan.TuitionLoan_;
 import jakarta.persistence.EntityManager;
@@ -27,9 +26,9 @@ public class TuitionLoanRepositoryImpl extends LoanRepositoryImpl<TuitionLoan> i
     }
 
     @Override
-    public List<Loan> getLoanInCurrentTerm(Term currentTerm) {
-        String query = "from EducationLoan  l where l.student.id=?1 and l.term.id =?2 ";
-        TypedQuery<Loan> query1 = entityManager.createQuery(query, Loan.class);
+    public List<TuitionLoan> getLoanInCurrentTerm(Term currentTerm) {
+        String query = "from TuitionLoan  l where l.student.id=?1 and l.term.id =?2 ";
+        TypedQuery<TuitionLoan> query1 = entityManager.createQuery(query, TuitionLoan.class);
         query1.setParameter(1,authHolder.tokenId);
         query1.setParameter(2,currentTerm.getId());
         return query1.getResultList();

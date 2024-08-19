@@ -43,10 +43,15 @@ public class ApplicationContext {
         StudentService studentService = new StudentServiceImpl(studentRepository);
         LoanRepository loanRepository =new LoanRepositoryImpl(em, authHolder);
         LoanService loanService =new LoanServiceImpl(loanRepository);
+        TuitionLoanRepository tuitionLoanRepository = new TuitionLoanRepositoryImpl(em,authHolder);
+        TuitionLoanService tuitionLoanService =new TuitionLoanServiceImpl(tuitionLoanRepository,termService,loanService, authHolder, studentService);
         CreditCardRepository creditCardRepository = new CreditCardRepositoryImpl(em);
         CreditCardService creditCardService =new CreditCardServiceImpl(creditCardRepository);
         EducationLoanService educationLoanService =new EducationLoanServiceImpl(educationLoanRepository,termService,loanService);
-        RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService, educationLoanService, bankService, creditCardService);
+        HousingLoanRepository housingLoanRepository =new HousingLoanRepositoryImpl(em,authHolder);
+        HousingLoanService housingLoanService =new HousingLoanServiceImpl(housingLoanRepository);
+        RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService,
+                educationLoanService, bankService, creditCardService, tuitionLoanService, housingLoanService);
         Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
         Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);

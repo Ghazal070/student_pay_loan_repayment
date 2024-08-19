@@ -4,7 +4,6 @@ package service.impl;
 import entity.Student;
 import entity.Term;
 import entity.loan.EducationLoan;
-import entity.loan.Loan;
 import repository.EducationLoanRepository;
 import service.EducationLoanService;
 import service.LoanService;
@@ -32,12 +31,12 @@ private final LoanService loanService;
         Term currentTerm = terms.get(terms.size() - 1);
         String termTitle = loanService.convertDateToTitleTerm(currentDate);
         if (currentTerm.getTitle().equals(termTitle)){
-            List<Loan> loans = repository.getLoanInCurrentTerm(currentTerm);
-            if (loans==null && loans.isEmpty()){
-                return false;
+            List<EducationLoan> loans = repository.getLoanInCurrentTerm(currentTerm);
+            if (loans.size()==0){
+                return true;
             }
         }
-        return true;
+        return false;
     }
     @Override
     public Integer loanAmount(Student student) {
@@ -66,7 +65,7 @@ private final LoanService loanService;
     }
 
     @Override
-    public List<Loan> getLoanInCurrentTerm(Term currentTerm) {
+    public List<EducationLoan> getLoanInCurrentTerm(Term currentTerm) {
         return repository.getLoanInCurrentTerm(currentTerm);
     }
 }

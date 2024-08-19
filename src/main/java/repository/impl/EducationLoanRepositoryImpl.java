@@ -3,7 +3,6 @@ package repository.impl;
 import entity.Term;
 import entity.loan.EducationLoan;
 import entity.loan.EducationLoan_;
-import entity.loan.Loan;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import repository.EducationLoanRepository;
@@ -25,12 +24,14 @@ public class EducationLoanRepositoryImpl extends LoanRepositoryImpl<EducationLoa
     public String getUniqueFieldName() {
         return EducationLoan_.ID;
     }
-    @Override
-    public List<Loan> getLoanInCurrentTerm(Term currentTerm) {
+
+    public List<EducationLoan> getLoanInCurrentTerm(Term currentTerm) {
         String query = "from EducationLoan  l where l.student.id=?1 and l.term.id =?2 ";
-        TypedQuery<Loan> query1 = entityManager.createQuery(query, Loan.class);
+        TypedQuery<EducationLoan> query1 = entityManager.createQuery(query, EducationLoan.class);
         query1.setParameter(1,authHolder.tokenId);
         query1.setParameter(2,currentTerm.getId());
+        List<EducationLoan> resultList = query1.getResultList();
+       resultList.forEach(System.out::println);
         return query1.getResultList();
     }
 }
