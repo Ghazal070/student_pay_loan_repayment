@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CreditCard extends BaseEntity<Integer>{
 
-    @Column
+    @Column(unique = true)
     @Size(max=10,min = 10,message = "Credit card  must be 10 characters")
     private String creditCardNumber;
 

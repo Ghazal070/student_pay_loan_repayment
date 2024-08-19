@@ -64,4 +64,9 @@ private final LoanService loanService;
         }
         return amount;
     }
+
+    @Override
+    public List<Loan> getLoanInCurrentTerm(Term currentTerm) {
+        return repository.getLoanInCurrentTerm(currentTerm);
+    }
 }

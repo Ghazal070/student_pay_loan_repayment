@@ -5,6 +5,7 @@ import entity.CreditCard;
 import entity.Student;
 import entity.Term;
 import entity.loan.EducationLoan;
+import entity.loan.Loan;
 import exception.ValidationException;
 import menu.util.Input;
 import menu.util.Message;
@@ -61,35 +62,65 @@ public class RegisterLoanMenu {
                     try {
                         Boolean validGetLoan = educationLoanService.isValidGetLoan(localDateNow);
                         if (validGetLoan) {
-                            List<Bank> banks = bankService.loadAll();
-                            System.out.println("Bank List:");
-                            if (!banks.isEmpty()) banks.forEach(System.out::println);
-                            String bankName = getInputData("bankName");
-                            List<Bank> bankList = banks.stream()
-                                    .filter(a -> a.getName().equals(bankName))
-                                    .toList();
-                            if (bankList.get(0) != null) {
-                                String creditCardNumber = getInputData("creditCardNumber");
-                                CreditCard creditCard = creditCardService.save(
-                                        CreditCard.builder().creditCardNumber(creditCardNumber).bank(
-                                                bankList.get(0)
-                                        ).build()
+                            //List<Loan> loans = educationLoanService.getLoanInCurrentTerm(currentTerm);
+//                            if(loans.isEmpty()){
+//                                System.out.println("You get educational loan In this term");
+//                                break;
+//                            }
+                            System.out.println("""
+                                    1- Register a credit card
+                                    2- Use your existing card number
+                                    """);
+                            CreditCard creditCard = null;
+                            switch (input.scanner.next()) {
+                                case "1": {
+                                    List<Bank> banks = bankService.loadAll();
+                                    System.out.println("Bank List:");
+                                    if (!banks.isEmpty()) banks.forEach(System.out::println);
+                                    String bankName = getInputData("bankName");
+                                    List<Bank> bankList = banks.stream()
+                                            .filter(a -> a.getName().equals(bankName))
+                                            .toList();
+                                    if (bankList.get(0) != null) {
+                                        String creditCardNumber = getInputData("creditCardNumber");
+
+                                        if (creditCardService.findByUniqId(creditCardNumber) == null) {
+                                            creditCard = creditCardService.save(
+                                                    CreditCard.builder().creditCardNumber(creditCardNumber).bank(
+                                                            bankList.get(0)
+                                                    ).build()
+                                            );
+
+                                        } else System.out.println("This credit card is exist");
+                                    }else System.out.println("Please enter bank name from above list ");
+                                        break;
+                                }
+                                case "2": {
+                                    String creditCardNumber = getInputData("creditCardNumber");
+                                    creditCard = creditCardService.findByUniqId(creditCardNumber);
+                                    if (creditCard==null) System.out.println("credit card not exist");
+                                    break;
+                                }
+                                default:
+                                    System.out.println(message.getInvalidMassage());
+                            }
+                            if (creditCard != null) {
+                                Integer loanAmount = educationLoanService.loanAmount(student);
+                                EducationLoan educationLoan = educationLoanService.save(
+                                        EducationLoan.builder()
+                                                .term(currentTerm)
+                                                .student(student)
+                                                .amount(loanAmount)
+                                                .build()
                                 );
-                                if (creditCard != null) {
-                                    EducationLoan educationLoan = educationLoanService.save(
-                                            EducationLoan.builder()
-                                                    .term(currentTerm)
-                                                    .student(student)
-                                                    .amount(educationLoanService
-                                                            .loanAmount(student))
-                                                    .build()
-                                    );
-                                    if (educationLoan != null)
-                                        System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                if (educationLoan != null) {
+                                    creditCard.setBalance(loanAmount);
+                                    creditCardService.update(creditCard);
+                                    System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                                 }
 
-                            } else System.out.println("Please enter bank name from above list ");
-                        } else System.out.println("You are not validate for loan");
+                            }
+                        } else System.out.println("You have register for loan in this term");
                     } catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {
@@ -98,6 +129,73 @@ public class RegisterLoanMenu {
                     break;
                 }
                 case "2": {
+                    try {
+                        Boolean validGetLoan = educationLoanService.isValidGetLoan(localDateNow);
+                        if (validGetLoan) {
+                            //List<Loan> loans = educationLoanService.getLoanInCurrentTerm(currentTerm);
+//                            if(loans.isEmpty()){
+//                                System.out.println("You get educational loan In this term");
+//                                break;
+//                            }
+                            System.out.println("""
+                                    1- Register a credit card
+                                    2- Use your existing card number
+                                    """);
+                            CreditCard creditCard = null;
+                            switch (input.scanner.next()) {
+                                case "1": {
+                                    List<Bank> banks = bankService.loadAll();
+                                    System.out.println("Bank List:");
+                                    if (!banks.isEmpty()) banks.forEach(System.out::println);
+                                    String bankName = getInputData("bankName");
+                                    List<Bank> bankList = banks.stream()
+                                            .filter(a -> a.getName().equals(bankName))
+                                            .toList();
+                                    if (bankList.get(0) != null) {
+                                        String creditCardNumber = getInputData("creditCardNumber");
+
+                                        if (creditCardService.findByUniqId(creditCardNumber) == null) {
+                                            creditCard = creditCardService.save(
+                                                    CreditCard.builder().creditCardNumber(creditCardNumber).bank(
+                                                            bankList.get(0)
+                                                    ).build()
+                                            );
+
+                                        } else System.out.println("This credit card is exist");
+                                    }else System.out.println("Please enter bank name from above list ");
+                                    break;
+                                }
+                                case "2": {
+                                    String creditCardNumber = getInputData("creditCardNumber");
+                                    creditCard = creditCardService.findByUniqId(creditCardNumber);
+                                    if (creditCard==null) System.out.println("credit card not exist");
+                                    break;
+                                }
+                                default:
+                                    System.out.println(message.getInvalidMassage());
+                            }
+                            if (creditCard != null) {
+                                Integer loanAmount = educationLoanService.loanAmount(student);
+                                EducationLoan educationLoan = educationLoanService.save(
+                                        EducationLoan.builder()
+                                                .term(currentTerm)
+                                                .student(student)
+                                                .amount(loanAmount)
+                                                .build()
+                                );
+                                if (educationLoan != null) {
+                                    creditCard.setBalance(loanAmount);
+                                    creditCardService.update(creditCard);
+                                    System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                }
+
+                            }
+                        } else System.out.println("You have register for loan in this term");
+                    } catch (ValidationException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (RuntimeException e) {
+                        System.out.println("An unexpected error occurred: " + e.getMessage());
+                    }
                     break;
                 }
                 case "3": {
@@ -115,6 +213,7 @@ public class RegisterLoanMenu {
 
 
         }
+
     }
 
     public String getInputData(String prompt) {

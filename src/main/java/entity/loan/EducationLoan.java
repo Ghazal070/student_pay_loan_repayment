@@ -21,7 +21,6 @@ import lombok.experimental.SuperBuilder;
 public class EducationLoan extends Loan {
 
     @OneToOne
-    @NotBlank
     protected Term term;
 
 
