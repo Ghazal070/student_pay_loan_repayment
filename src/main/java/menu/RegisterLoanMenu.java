@@ -252,7 +252,7 @@ public class RegisterLoanMenu {
                                 }
 
                             }
-                        } else System.out.println("You have register for housing loan in this term");
+                        } else System.out.println("You have register for housing loan in this degree");
                     } catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {

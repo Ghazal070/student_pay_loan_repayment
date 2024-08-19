@@ -5,6 +5,7 @@ import entity.Student;
 import repository.StudentRepository;
 import service.StudentService;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 
@@ -67,4 +68,9 @@ public class StudentServiceImpl extends BaseEntityServiceImpl<StudentRepository,
         return new String(characters);
     }
 
+    @Override
+    public Boolean isStudentNow(LocalDate currentDate) {
+
+        return null;
+    }
 }

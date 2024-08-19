@@ -2,8 +2,11 @@ package menu;
 
 import menu.util.Input;
 import menu.util.Message;
+import service.LoanService;
 import service.StudentService;
 import util.AuthHolder;
+
+import java.time.LocalDate;
 
 public class Signin {
     private final Input input;
@@ -33,6 +36,11 @@ public class Signin {
                     """);
             switch (input.scanner.next()) {
                 case "1": {
+                    LocalDate localDateNow = LocalDate.of(1403, 8, 3);
+                    //                    LocalDate.now()
+
+                    if (!isAppropriateDate) System.out.println("LoanPay Service is available only 08-01/08-07 and 11-25/12-02 ");
+
                     registerLoanMenu.show();
                     break;
                 }

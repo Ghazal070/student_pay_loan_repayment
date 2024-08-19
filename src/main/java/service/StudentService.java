@@ -3,6 +3,7 @@ package service;
 import entity.BaseEntity;
 import entity.Student;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface StudentService extends BaseEntityService<Student,Integer> {
@@ -12,4 +13,5 @@ public interface StudentService extends BaseEntityService<Student,Integer> {
 
     @Override
     Student save(Student entity);
+    Boolean isStudentNow(LocalDate currentDate);
 }
