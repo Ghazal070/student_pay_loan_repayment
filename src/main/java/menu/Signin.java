@@ -37,7 +37,7 @@ public class Signin {
                     """);
             switch (input.scanner.next()) {
                 case "1": {
-                    LocalDate localDateNow = LocalDate.of(1403, 8, 3);
+                    LocalDate localDateNow = LocalDate.of(1402, 8, 3);
                     //                    LocalDate.now()
 
                     if (!studentService.isGraduated(localDateNow))

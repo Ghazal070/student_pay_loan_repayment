@@ -14,12 +14,14 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	public static final String LAST_NAME = "lastName";
 	public static final String FATHER_NAME = "fatherName";
 	public static final String NATIONAL_CODE = "nationalCode";
+	public static final String ADDRESS = "address";
 	public static final String IS_DORMITORY = "isDormitory";
 	public static final String CITY = "city";
 	public static final String STUDENT_NUMBER = "studentNumber";
 	public static final String UNIVERSITY = "university";
 	public static final String MOTHER_NAME = "motherName";
 	public static final String DEGREE = "degree";
+	public static final String CONTRACT_NUMBER = "contractNumber";
 	public static final String BIRTH_DATE = "birthDate";
 	public static final String IS_MARRIED = "isMarried";
 	public static final String FIRST_NAME = "firstName";
@@ -50,6 +52,11 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	public static volatile SingularAttribute<Student, String> nationalCode;
 	
 	/**
+	 * @see entity.Student#address
+	 **/
+	public static volatile SingularAttribute<Student, String> address;
+	
+	/**
 	 * @see entity.Student#isDormitory
 	 **/
 	public static volatile SingularAttribute<Student, Boolean> isDormitory;
@@ -78,6 +85,11 @@ public abstract class Student_ extends entity.BaseEntity_ {
 	 * @see entity.Student#degree
 	 **/
 	public static volatile SingularAttribute<Student, Degree> degree;
+	
+	/**
+	 * @see entity.Student#contractNumber
+	 **/
+	public static volatile SingularAttribute<Student, String> contractNumber;
 	
 	/**
 	 * @see entity.Student#birthDate
