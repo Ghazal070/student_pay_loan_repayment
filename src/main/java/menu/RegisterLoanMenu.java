@@ -14,6 +14,7 @@ import service.*;
 import util.AuthHolder;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RegisterLoanMenu {
@@ -84,22 +85,28 @@ public class RegisterLoanMenu {
                                             .toList();
                                     if (bankList.get(0) != null) {
                                         String creditCardNumber = getInputData("creditCardNumber");
-
                                         if (creditCardService.findByUniqId(creditCardNumber) == null) {
+                                            String ccv2 = getInputData("CCV2");
+                                            String expirationDate = getInputData("expirationDate as \'yyyy-MM-dd\'");
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                                            LocalDate localDate = LocalDate.parse(expirationDate, formatter);
                                             creditCard = creditCardService.save(
                                                     CreditCard.builder().creditCardNumber(creditCardNumber).bank(
-                                                            bankList.get(0)
-                                                    ).build()
+                                                                    bankList.get(0)
+                                                            )
+                                                            .expirationDate(localDate)
+                                                            .CCV2(ccv2)
+                                                            .build()
                                             );
 
                                         } else System.out.println("This credit card is exist");
-                                    }else System.out.println("Please enter bank name from above list ");
-                                        break;
+                                    } else System.out.println("Please enter bank name from above list ");
+                                    break;
                                 }
                                 case "2": {
                                     String creditCardNumber = getInputData("creditCardNumber");
                                     creditCard = creditCardService.findByUniqId(creditCardNumber);
-                                    if (creditCard==null) System.out.println("credit card not exist");
+                                    if (creditCard == null) System.out.println("credit card not exist");
                                     break;
                                 }
                                 default:
@@ -115,7 +122,7 @@ public class RegisterLoanMenu {
                                                 .build()
                                 );
                                 if (educationLoan != null) {
-                                    creditCard.setBalance(creditCard.getBalance()+loanAmount);
+                                    creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                                 }
@@ -159,13 +166,13 @@ public class RegisterLoanMenu {
                                             );
 
                                         } else System.out.println("This credit card is exist");
-                                    }else System.out.println("Please enter bank name from above list ");
+                                    } else System.out.println("Please enter bank name from above list ");
                                     break;
                                 }
                                 case "2": {
                                     String creditCardNumber = getInputData("creditCardNumber");
                                     creditCard = creditCardService.findByUniqId(creditCardNumber);
-                                    if (creditCard==null) System.out.println("credit card not exist");
+                                    if (creditCard == null) System.out.println("credit card not exist");
                                     break;
                                 }
                                 default:
@@ -181,7 +188,7 @@ public class RegisterLoanMenu {
                                                 .build()
                                 );
                                 if (tuitionLoan != null) {
-                                    creditCard.setBalance(creditCard.getBalance()+loanAmount);
+                                    creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                                 }
@@ -197,6 +204,16 @@ public class RegisterLoanMenu {
                 }
                 case "3": {
                     try {
+                        String isMarried = getInputData("isMarried (yes/no)");
+                        String partnerNationalCode = getInputData("partnerNationalCode");
+
+                        String address = getInputData("address");
+                        String contractNumber = getInputData("contractNumber");
+                        student.setIsMarried(getYesNo(isMarried));
+                        student.setPartnerNationalCode(partnerNationalCode);
+                        student.setAddress(address);
+                        student.setContractNumber(contractNumber);
+                        Student updateStudent = studentService.update(student);
                         Boolean validGetLoan =
                                 housingLoanService.isValidGetLoan(localDateNow);
                         if (validGetLoan) {
@@ -225,20 +242,20 @@ public class RegisterLoanMenu {
                                             );
 
                                         } else System.out.println("This credit card is exist");
-                                    }else System.out.println("Please enter bank name from above list ");
+                                    } else System.out.println("Please enter bank name from above list ");
                                     break;
                                 }
                                 case "2": {
                                     String creditCardNumber = getInputData("creditCardNumber");
                                     creditCard = creditCardService.findByUniqId(creditCardNumber);
-                                    if (creditCard==null) System.out.println("credit card not exist");
+                                    if (creditCard == null) System.out.println("credit card not exist");
                                     break;
                                 }
                                 default:
                                     System.out.println(message.getInvalidMassage());
                             }
                             if (creditCard != null) {
-                                Integer loanAmount = housingLoanService.loanAmount(student);
+                                Integer loanAmount = housingLoanService.loanAmount(updateStudent);
                                 HousingLoan housingLoan = housingLoanService.save(
                                         HousingLoan.builder()
                                                 .student(student)
@@ -246,7 +263,7 @@ public class RegisterLoanMenu {
                                                 .build()
                                 );
                                 if (housingLoan != null) {
-                                    creditCard.setBalance(creditCard.getBalance()+loanAmount);
+                                    creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
                                 }
@@ -278,6 +295,11 @@ public class RegisterLoanMenu {
     public String getInputData(String prompt) {
         System.out.println(message.getInputMassage(prompt));
         return input.scanner.next();
+    }
+
+    private Boolean getYesNo(String prompt) {
+        if (prompt.equals("yes")) return true;
+        return false;
     }
 
 }

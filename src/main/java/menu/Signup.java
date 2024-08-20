@@ -51,10 +51,7 @@ public class Signup {
                         String entryYear = getInputData("entryYear(1990)");
                         String universityName = getInputData("UniversityName");
                         String isDormitory = getInputData("isDormitory (yes/no)");
-                        Boolean isMarriedBoolean = getYesNo(isDormitory);
-                        String isMarried = getInputData("isMarried (yes/no)");
-                        Boolean isDormitoryBoolean = getYesNo(isMarried);
-                        String partnerNationalCode = getInputData("partnerNationalCode");
+                        Boolean isDormitoryBoolean = getYesNo(isDormitory);
                         String cityName = getInputData("city Name");
                         City city =cityService.findByUniqId(cityName);
                         String degreeInput = getInputData("""
@@ -88,10 +85,8 @@ public class Signup {
                                 .studentNumber(studentNumber)
                                 .degree(degree)
                                 .entryYear(Integer.valueOf(entryYear))
-                                .isMarried(isMarriedBoolean)
                                 .isDormitory(isDormitoryBoolean)
                                 .city(city)
-                                .partnerNationalCode(partnerNationalCode)
                                 .university(University.builder()
                                         .name(universityName)
                                         .universityType(universityType)

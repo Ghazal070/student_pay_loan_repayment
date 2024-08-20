@@ -81,4 +81,9 @@ public class Student extends BaseEntity<Integer>{
     @Column
     private String partnerNationalCode;
 
+    @Column
+    private String address;
+
+    @Column
+    private String contractNumber;
 }

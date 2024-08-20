@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -27,5 +29,12 @@ public class CreditCard extends BaseEntity<Integer>{
 
     @Column
     private Integer balance;
+
+    @Column
+    private LocalDate  expirationDate;
+
+    @Column
+    private String  CCV2;
+
 
 }
