@@ -8,10 +8,7 @@ import entity.Term;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import menu.Menu;
-import menu.RegisterLoanMenu;
-import menu.Signin;
-import menu.Signup;
+import menu.*;
 import menu.util.Input;
 import menu.util.Message;
 import repository.impl.*;
@@ -40,7 +37,7 @@ public class ApplicationContext {
         TermService termService =new TermServiceImpl(termRepository);
         EducationLoanRepository educationLoanRepository =new EducationLoanRepositoryImpl(em,authHolder);
         CityService cityService = new CityServiceImpl(cityRepository);
-        StudentService studentService = new StudentServiceImpl(studentRepository);
+        StudentService studentService = new StudentServiceImpl(studentRepository, authHolder);
         LoanRepository loanRepository =new LoanRepositoryImpl(em, authHolder);
         LoanService loanService =new LoanServiceImpl(loanRepository);
         TuitionLoanRepository tuitionLoanRepository = new TuitionLoanRepositoryImpl(em,authHolder);
@@ -52,7 +49,8 @@ public class ApplicationContext {
         HousingLoanService housingLoanService =new HousingLoanServiceImpl(housingLoanRepository, termService, loanService, authHolder, studentService);
         RegisterLoanMenu registerLoanMenu =new RegisterLoanMenu(input,message,studentService,authHolder,loanService, termService,
                 educationLoanService, bankService, creditCardService, tuitionLoanService, housingLoanService);
-        Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu);
+        RepaymentMenu repaymentMenu = new RepaymentMenu(input,message);
+        Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu, repaymentMenu);
         Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);
 

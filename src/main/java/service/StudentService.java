@@ -13,5 +13,5 @@ public interface StudentService extends BaseEntityService<Student,Integer> {
 
     @Override
     Student save(Student entity);
-    Boolean isStudentNow(LocalDate currentDate);
+    Boolean isGraduated(LocalDate currentDate);
 }

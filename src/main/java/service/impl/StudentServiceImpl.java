@@ -4,15 +4,17 @@ package service.impl;
 import entity.Student;
 import repository.StudentRepository;
 import service.StudentService;
+import util.AuthHolder;
 
 import java.time.LocalDate;
 import java.util.Random;
 
 
 public class StudentServiceImpl extends BaseEntityServiceImpl<StudentRepository, Student, Integer> implements StudentService {
-
-    public StudentServiceImpl(StudentRepository repository) {
+private  final AuthHolder authHolder;
+    public StudentServiceImpl(StudentRepository repository, AuthHolder authHolder) {
         super(repository);
+        this.authHolder = authHolder;
     }
 
     @Override
@@ -69,8 +71,38 @@ public class StudentServiceImpl extends BaseEntityServiceImpl<StudentRepository,
     }
 
     @Override
-    public Boolean isStudentNow(LocalDate currentDate) {
-
-        return null;
+    public Boolean isGraduated(LocalDate currentDate) {
+        Student student = repository.findById(authHolder.getTokenId());
+        Integer entryYear = student.getEntryYear();
+        int diff = currentDate.getYear() - entryYear;
+        switch (student.getDegree()){
+            case Associate:
+            case DiscontinuousBachelor:
+            case DiscontinuousMaster:
+            {
+                if (diff>2){
+                    return true;
+                }
+            }
+            case ContinuousBachelor:
+            case DisContinuousPhD:
+            case ProfessionalPHD:{
+                if (diff>4){
+                    return true;
+                }
+            }
+            case ContinuousMaster:{
+                if (diff>6){
+                    return true;
+                }
+            }
+            case ContinuousPhD:{
+                if (diff>8){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
 }

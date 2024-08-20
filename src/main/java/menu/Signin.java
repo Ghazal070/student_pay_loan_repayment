@@ -2,7 +2,6 @@ package menu;
 
 import menu.util.Input;
 import menu.util.Message;
-import service.LoanService;
 import service.StudentService;
 import util.AuthHolder;
 
@@ -14,14 +13,16 @@ public class Signin {
     private final StudentService studentService;
     private final AuthHolder authHolder;
     private final RegisterLoanMenu registerLoanMenu;
+    private final RepaymentMenu repaymentMenu;
 
 
-    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder, RegisterLoanMenu registerLoanMenu) {
+    public Signin(Input input, Message message, StudentService studentService, AuthHolder authHolder, RegisterLoanMenu registerLoanMenu, RepaymentMenu repaymentMenu) {
         this.input = input;
         this.message = message;
         this.studentService = studentService;
         this.authHolder = authHolder;
         this.registerLoanMenu = registerLoanMenu;
+        this.repaymentMenu = repaymentMenu;
     }
 
     public void show() {
@@ -39,12 +40,18 @@ public class Signin {
                     LocalDate localDateNow = LocalDate.of(1403, 8, 3);
                     //                    LocalDate.now()
 
-                    if (!isAppropriateDate) System.out.println("LoanPay Service is available only 08-01/08-07 and 11-25/12-02 ");
-
-                    registerLoanMenu.show();
+                    if (!studentService.isGraduated(localDateNow))
+                        registerLoanMenu.show();
+                    else System.out.println("You are graduated.Dont have assess. ");
                     break;
                 }
                 case "2": {
+                    LocalDate localDateNow = LocalDate.of(1403, 8, 3);
+                    //                    LocalDate.now()
+
+                    if (studentService.isGraduated(localDateNow))
+                        repaymentMenu.show();
+                    else System.out.println("You are student.Dont have assess. ");
                     break;
                 }
                 case "3": {
