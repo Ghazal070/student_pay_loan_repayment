@@ -105,4 +105,36 @@ private  final AuthHolder authHolder;
         return false;
     }
 
+    @Override
+    public LocalDate dateGraduated() {
+        Student student = repository.findById(authHolder.getTokenId());
+        Integer entryYear = student.getEntryYear();
+        LocalDate date =LocalDate.now();
+        LocalDate newDate =null;
+        switch (student.getDegree()){
+            case Associate:
+            case DiscontinuousBachelor:
+            case DiscontinuousMaster:
+            {
+                newDate=date.withYear(entryYear+2);
+                break;
+            }
+            case ContinuousBachelor:
+            case DisContinuousPhD:
+            case ProfessionalPHD:{
+                newDate=date.withYear(entryYear+4);
+                break;
+            }
+            case ContinuousMaster:{
+                newDate=date.withYear(entryYear+6);
+                break;
+            }
+            case ContinuousPhD:{
+                newDate=date.withYear(entryYear+8);
+                break;
+            }
+        }
+        return newDate;
+    }
+
 }

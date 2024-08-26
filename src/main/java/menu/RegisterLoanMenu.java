@@ -29,9 +29,10 @@ public class RegisterLoanMenu {
     private final CreditCardService creditCardService;
     private final TuitionLoanService tuitionLoanService;
     private final HousingLoanService housingLoanService;
+    private final InstallmentService installmentService;
 
 
-    public RegisterLoanMenu(Input input, Message message, StudentService studentService, AuthHolder authHolder, LoanService loanService, TermService termService, EducationLoanService educationLoanService, BankService bankService, CreditCardService creditCardService, TuitionLoanService tuitionLoanService, HousingLoanService housingLoanService) {
+    public RegisterLoanMenu(Input input, Message message, StudentService studentService, AuthHolder authHolder, LoanService loanService, TermService termService, EducationLoanService educationLoanService, BankService bankService, CreditCardService creditCardService, TuitionLoanService tuitionLoanService, HousingLoanService housingLoanService, InstallmentService installmentService) {
         this.input = input;
         this.message = message;
         this.studentService = studentService;
@@ -43,6 +44,7 @@ public class RegisterLoanMenu {
         this.creditCardService = creditCardService;
         this.tuitionLoanService = tuitionLoanService;
         this.housingLoanService = housingLoanService;
+        this.installmentService = installmentService;
     }
 
     public void show() {
@@ -96,6 +98,7 @@ public class RegisterLoanMenu {
                                                             )
                                                             .expirationDate(localDate)
                                                             .CCV2(ccv2)
+                                                            .balance(0)
                                                             .build()
                                             );
 
@@ -125,6 +128,7 @@ public class RegisterLoanMenu {
                                     creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                    boolean installment = installmentService.createInstallment(educationLoan);
                                 }
 
                             }
@@ -161,8 +165,10 @@ public class RegisterLoanMenu {
                                         if (creditCardService.findByUniqId(creditCardNumber) == null) {
                                             creditCard = creditCardService.save(
                                                     CreditCard.builder().creditCardNumber(creditCardNumber).bank(
-                                                            bankList.get(0)
-                                                    ).build()
+                                                                    bankList.get(0)
+                                                            )
+                                                            .balance(0)
+                                                            .build()
                                             );
 
                                         } else System.out.println("This credit card is exist");
@@ -237,8 +243,10 @@ public class RegisterLoanMenu {
                                         if (creditCardService.findByUniqId(creditCardNumber) == null) {
                                             creditCard = creditCardService.save(
                                                     CreditCard.builder().creditCardNumber(creditCardNumber).bank(
-                                                            bankList.get(0)
-                                                    ).build()
+                                                                    bankList.get(0)
+                                                            )
+                                                            .balance(0)
+                                                            .build()
                                             );
 
                                         } else System.out.println("This credit card is exist");
