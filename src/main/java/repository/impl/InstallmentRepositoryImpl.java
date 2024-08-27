@@ -35,4 +35,13 @@ public class InstallmentRepositoryImpl extends BaseEntityRepositoryImpl<Installm
         typedQuery.setParameter(2,isPayed);
         return typedQuery.getResultList();
     }
+
+    @Override
+    public List<Installment> loadAllInstallmentLoanIsPay(Integer loanId,Boolean isPayed) {
+        String query = "from Installment i where i.loan.id=?1 and i.isPayed=?2";
+        TypedQuery<Installment> typedQuery = entityManager.createQuery(query, Installment.class);
+        typedQuery.setParameter(1,loanId);
+        typedQuery.setParameter(2,isPayed);
+        return typedQuery.getResultList();
+    }
 }

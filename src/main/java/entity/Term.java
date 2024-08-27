@@ -20,4 +20,9 @@ public class Term extends BaseEntity<Integer> {
     @Size(max=6,min = 6,message = "Title Term must be 6 characters")
     private  String title;
 
+    @Override
+    public String toString() {
+        return "Term: " + id +"- "+ title;
+
+    }
 }

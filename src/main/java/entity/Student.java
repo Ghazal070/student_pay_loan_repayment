@@ -86,4 +86,11 @@ public class Student extends BaseEntity<Integer>{
 
     @Column
     private String contractNumber;
+
+    @Override
+    public String toString() {
+        return "Student:" +id + "- "+firstName + lastName +" username="
+                + username + " studentNumber=" + studentNumber + " entryYear=" + entryYear;
+
+    }
 }

@@ -59,4 +59,9 @@ public class InstallmentServiceImpl extends BaseEntityServiceImpl<InstallmentRep
     public List<Installment> loadIsPayed(Boolean isPayed) {
         return repository.loadIsPayed(isPayed);
     }
+
+    @Override
+    public List<Installment> loadAllInstallmentLoanIsPay(Integer loanId,Boolean isPayed) {
+        return repository.loadAllInstallmentLoanIsPay(loanId,isPayed);
+    }
 }

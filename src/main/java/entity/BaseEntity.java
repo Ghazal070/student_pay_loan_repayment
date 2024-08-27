@@ -23,8 +23,6 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 
     @Override
     public String toString() {
-        return "BaseEntity{" +
-                "id=" + id +
-                '}';
+        return "BaseEntity: " +id +"- ";
     }
 }

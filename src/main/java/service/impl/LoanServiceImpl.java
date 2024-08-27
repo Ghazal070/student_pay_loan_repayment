@@ -52,4 +52,9 @@ public class LoanServiceImpl<U extends LoanRepository<T>, T extends Loan>
     public Integer loanAmount(Student student) {
         return null;
     }
+
+    @Override
+    public List<T> findByLoanTypeStudent(String dType) {
+        return repository.findByLoanTypeStudent(dType);
+    }
 }

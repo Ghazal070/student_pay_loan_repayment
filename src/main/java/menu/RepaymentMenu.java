@@ -2,13 +2,18 @@ package menu;
 
 import entity.CreditCard;
 import entity.Installment;
+import entity.loan.Loan;
 import menu.util.Input;
 import menu.util.Message;
 import service.CreditCardService;
 import service.InstallmentService;
+import service.LoanService;
+import util.AuthHolder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RepaymentMenu {
@@ -16,15 +21,19 @@ public class RepaymentMenu {
     private final Message message;
     private final InstallmentService installmentService;
     private final CreditCardService creditCardService;
+    private final LoanService loanService;
+    private final AuthHolder authHolder;
 
 
-    public RepaymentMenu(Input input, Message message, InstallmentService installmentService, CreditCardService creditCardService) {
+    public RepaymentMenu(Input input, Message message, InstallmentService installmentService, CreditCardService creditCardService, LoanService loanService, AuthHolder authHolder) {
         this.input = input;
         this.message = message;
 
         this.installmentService = installmentService;
 
         this.creditCardService = creditCardService;
+        this.loanService = loanService;
+        this.authHolder = authHolder;
     }
 
     public void show() {
@@ -53,34 +62,66 @@ public class RepaymentMenu {
                     break;
                 }
                 case "3": {
-                    String loanType = getInputData("Which type you want to pay? Educational or Tuition or Housing");
-                    String creditCardNumber = getInputData("creditCardNumber");
-                    String expirationDateString = getInputData("expirationDate as \'yyyy-MM-dd\'");
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate expirationDate = LocalDate.parse(expirationDateString, formatter);
-                    String ccv2 = getInputData("ccv2");
-                    CreditCard creditCard = creditCardService.findByUniqId(creditCardNumber);
-                    CreditCard updateCreditCard = null;
-                    if (creditCard != null) {
-                        if (!creditCard.getExpirationDate().equals(expirationDate)
-                                || !creditCard.getCCV2().equals(ccv2)) {
-                            System.out.println(message.getFailMassage("expirationDate or ccv2 not correct!"));
-                            break;
-                        }
-                        if (expirationDate.isBefore(LocalDate.now())) {
-                            System.out.println("Card is expired do want enter true expirationDate? (yes/no)");
-                            if (input.scanner.next().equals("yes")) {
-                                expirationDateString = getInputData("expirationDate as \'yyyy-MM-dd\'");
-                                expirationDate = LocalDate.parse(expirationDateString, formatter);
-                                creditCard.setExpirationDate(expirationDate);
-                                updateCreditCard = creditCardService.update(creditCard);
-
-
+                    try {
+                        String loanType = getInputData("Which type you want to pay? Education or Tuition or Housing");
+                        String creditCardNumber = getInputData("creditCardNumber");
+                        String expirationDateString = getInputData("expirationDate as \'yyyy-MM-dd\'");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        LocalDate expirationDate = LocalDate.parse(expirationDateString, formatter);
+                        String ccv2 = getInputData("ccv2");
+                        CreditCard creditCard = creditCardService.findByUniqId(creditCardNumber);
+                        CreditCard updateCreditCard = null;
+                        if (creditCard != null) {
+                            if (!(loanType.equals("Education") || loanType.equals("Tuition")
+                                    || loanType.equals("Housing"))) {
+                                System.out.println(message.getFailMassage("Loan Type not Correct please choose from items"));
+                                break;
+                            } else loanType = loanType + "Loan";
+                            if (!creditCard.getExpirationDate().equals(expirationDate)
+                                    || !creditCard.getCCV2().equals(ccv2)) {
+                                System.out.println(message.getFailMassage("expirationDate or ccv2 not correct!"));
+                                break;
                             }
-                            break;
-                        }
-                    } else
-                        System.out.println(message.getFailMassage("credit card not exist"));
+                            if (expirationDate.isBefore(LocalDate.now())) {
+                                System.out.println("Card is expired do want enter true expirationDate? (yes/no)");
+                                if (input.scanner.next().equals("yes")) {
+                                    expirationDateString = getInputData("expirationDate as \'yyyy-MM-dd\'");
+                                    expirationDate = LocalDate.parse(expirationDateString, formatter);
+                                    ccv2 = getInputData("ccv2");
+                                    creditCard.setExpirationDate(expirationDate);
+                                    creditCard.setCCV2(ccv2);
+                                    updateCreditCard = creditCardService.update(creditCard);
+                                }
+                                break;
+                            }
+                            List loanTypeStudent = loanService.findByLoanTypeStudent(loanType);
+                            List<Installment> allInstallments = new ArrayList<>();
+                            if (loanTypeStudent != null && !loanTypeStudent.isEmpty()) {
+                                for (int i = 0; i < loanTypeStudent.size(); i++) {
+                                    Loan loan = (Loan) loanTypeStudent.get(i);
+                                    List<Installment> installments = installmentService.loadAllInstallmentLoanIsPay(loan.getId(), false);
+                                    allInstallments.addAll(installments);
+                                }
+                                if (!allInstallments.isEmpty()) {
+                                    allInstallments.sort(Comparator.comparing(Installment::getLocalDate));
+                                    Installment installment = allInstallments.get(0);
+                                    int diffMountInstallBalanceCard = creditCard.getBalance() - installment.getAmount();
+                                    if (diffMountInstallBalanceCard >= 0) {
+                                        installment.setPayed(true);
+                                        installmentService.update(installment);
+                                        creditCard.setBalance(diffMountInstallBalanceCard);
+                                        creditCardService.update(creditCard);
+                                        System.out.println(message.getSuccessfulMassage(authHolder.tokenName));
+                                    } else System.out.println("CreditCard Balance Not Enough!");
+                                } else System.out.println("Installment is Empty");
+                            } else System.out.println(loanType +" is Empty");
+
+
+                        } else
+                            System.out.println(message.getFailMassage("credit card not exist"));
+                    } catch (RuntimeException e) {
+                        System.out.println("An unexpected error occurred: " + e.getMessage());
+                    }
                     break;
                 }
                 case "4": {

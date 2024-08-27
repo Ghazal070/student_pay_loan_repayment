@@ -35,5 +35,8 @@ public class Loan extends BaseEntity<Integer> {
     //todo factory method
 
 
-
+    @Override
+    public String toString() {
+        return id +"- "+ "amount:" + amount + " studentName=" + student.getLastName();
+    }
 }

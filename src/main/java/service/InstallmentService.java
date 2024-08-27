@@ -12,4 +12,5 @@ public interface InstallmentService extends BaseEntityService<Installment,Intege
     boolean createInstallment(Loan loan);
     double calculateInstallmentAmount(Integer loanAmount);
     List<Installment> loadIsPayed(Boolean isPayed);
+    List<Installment> loadAllInstallmentLoanIsPay(Integer loanId,Boolean isPayed);
 }

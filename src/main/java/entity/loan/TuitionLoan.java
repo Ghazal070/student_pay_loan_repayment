@@ -26,5 +26,8 @@ public class TuitionLoan extends Loan {
     @NotNull
     protected Term term;
 
-
+    @Override
+    public String toString() {
+        return "TuitionLoan: "+ "term=" + term + super.toString();
+    }
 }

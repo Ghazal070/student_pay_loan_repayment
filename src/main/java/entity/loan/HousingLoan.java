@@ -21,5 +21,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class HousingLoan extends Loan {
 
-
+    @Override
+    public String toString() {
+        return "HousingLoan:" + super.toString();
+    }
 }

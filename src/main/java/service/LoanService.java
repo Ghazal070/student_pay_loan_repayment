@@ -13,5 +13,7 @@ public interface LoanService<T extends Loan> extends BaseEntityService<T,Integer
     Boolean isAppropriateDate(LocalDate currentDate);
     String convertDateToTitleTerm(LocalDate currentDate);
     Integer loanAmount(Student student);
+    List<T> findByLoanTypeStudent(String dType);
+
 
 }
