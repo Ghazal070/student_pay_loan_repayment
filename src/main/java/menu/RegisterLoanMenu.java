@@ -99,6 +99,7 @@ public class RegisterLoanMenu {
                                                             .expirationDate(localDate)
                                                             .CCV2(ccv2)
                                                             .balance(0)
+                                                            .student(student)
                                                             .build()
                                             );
 
@@ -168,6 +169,7 @@ public class RegisterLoanMenu {
                                                                     bankList.get(0)
                                                             )
                                                             .balance(0)
+                                                            .student(student)
                                                             .build()
                                             );
 
@@ -246,6 +248,7 @@ public class RegisterLoanMenu {
                                                                     bankList.get(0)
                                                             )
                                                             .balance(0)
+                                                            .student(student)
                                                             .build()
                                             );
 

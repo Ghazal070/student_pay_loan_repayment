@@ -13,6 +13,7 @@ public abstract class CreditCard_ extends entity.BaseEntity_ {
 	public static final String BANK = "bank";
 	public static final String C_CV2 = "CCV2";
 	public static final String BALANCE = "balance";
+	public static final String STUDENT = "student";
 	public static final String CREDIT_CARD_NUMBER = "creditCardNumber";
 	public static final String EXPIRATION_DATE = "expirationDate";
 
@@ -31,6 +32,11 @@ public abstract class CreditCard_ extends entity.BaseEntity_ {
 	 * @see entity.CreditCard#balance
 	 **/
 	public static volatile SingularAttribute<CreditCard, Integer> balance;
+	
+	/**
+	 * @see entity.CreditCard#student
+	 **/
+	public static volatile SingularAttribute<CreditCard, Student> student;
 	
 	/**
 	 * @see entity.CreditCard#creditCardNumber

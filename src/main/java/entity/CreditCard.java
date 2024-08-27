@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +37,10 @@ public class CreditCard extends BaseEntity<Integer>{
 
     @Column
     private String  CCV2;
+
+    @ManyToOne
+    @NotNull
+    protected Student student;
 
 
 }

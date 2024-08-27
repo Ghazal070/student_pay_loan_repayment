@@ -31,6 +31,7 @@ public class Loan extends BaseEntity<Integer> {
     @NotNull
     protected Student student;
 
+
     //todo factory method
 
 
