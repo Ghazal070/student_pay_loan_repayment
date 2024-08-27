@@ -46,7 +46,7 @@ public class Signin {
                     break;
                 }
                 case "2": {
-                    LocalDate localDateNow = LocalDate.of(1407, 8, 3);
+                    LocalDate localDateNow = LocalDate.of(2027, 8, 3);
                     //                    LocalDate.now()
 
                     if (studentService.isGraduated(localDateNow))
