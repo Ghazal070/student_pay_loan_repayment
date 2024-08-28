@@ -88,7 +88,8 @@ public class RepaymentMenu {
                                 System.out.println(message.getFailMassage("expirationDate or ccv2 not correct!"));
                                 break;
                             }
-                            if (expirationDate.isBefore(LocalDate.now())) {
+                            LocalDate miladiToShamsi = creditCardService.convertDateMiladiToShamsi(LocalDate.now());
+                            if (expirationDate.isBefore(miladiToShamsi)) {
                                 System.out.println("Card is expired do want enter true expirationDate? (yes/no)");
                                 if (input.scanner.next().equals("yes")) {
                                     expirationDateString = getInputData("expirationDate as \'yyyy-MM-dd\'");
@@ -96,6 +97,7 @@ public class RepaymentMenu {
                                     ccv2 = getInputData("ccv2");
                                     creditCard.setExpirationDate(expirationDate);
                                     creditCard.setCCV2(ccv2);
+                                    creditCardService.update(creditCard);
                                 }
                                 break;
                             }
