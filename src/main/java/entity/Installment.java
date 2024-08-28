@@ -36,6 +36,6 @@ public class Installment extends BaseEntity<Integer>{
 
     @Override
     public String toString() {
-        return  id +"-" + " " + localDate + " " +  "amount: " + amount ;
+        return  id +"-" + " " +"loanType:" + loan.getClass().getSimpleName()+  " datePaying:" +localDate + " " +  "amount: " + amount ;
     }
 }

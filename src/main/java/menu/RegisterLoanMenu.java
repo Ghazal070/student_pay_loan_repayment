@@ -129,7 +129,7 @@ public class RegisterLoanMenu {
                                     creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
-                                    boolean installment = installmentService.createInstallment(educationLoan);
+                                    installmentService.createInstallment(educationLoan);
                                 }
 
                             }
@@ -199,6 +199,7 @@ public class RegisterLoanMenu {
                                     creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                    installmentService.createInstallment(tuitionLoan);
                                 }
 
                             }
@@ -277,6 +278,7 @@ public class RegisterLoanMenu {
                                     creditCard.setBalance(creditCard.getBalance() + loanAmount);
                                     creditCardService.update(creditCard);
                                     System.out.println(message.getSuccessfulMassage(authHolder.getTokenName()));
+                                    installmentService.createInstallment(housingLoan);
                                 }
 
                             }

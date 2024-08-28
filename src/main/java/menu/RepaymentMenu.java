@@ -49,15 +49,22 @@ public class RepaymentMenu {
             switch (input.scanner.next()) {
                 case "1": {
                     List<Installment> installmentsPayed = installmentService.loadIsPayed(true);
-                    if (installmentsPayed != null && !installmentsPayed.isEmpty())
+                    if (installmentsPayed != null && !installmentsPayed.isEmpty()){
+                        installmentsPayed.sort(Comparator.comparing(Installment::getLocalDate));
                         installmentsPayed.forEach(System.out::println);
+
+                    }
+
                     else System.out.println("Not exit any paying installment");
                     break;
                 }
                 case "2": {
                     List<Installment> installmentsPayed = installmentService.loadIsPayed(false);
-                    if (installmentsPayed != null && !installmentsPayed.isEmpty())
+                    if (installmentsPayed != null && !installmentsPayed.isEmpty()){
+                        installmentsPayed.sort(Comparator.comparing(Installment::getLocalDate));
                         installmentsPayed.forEach(System.out::println);
+                    }
+
                     else System.out.println("Not exit any dont paying installment");
                     break;
                 }
@@ -70,7 +77,6 @@ public class RepaymentMenu {
                         LocalDate expirationDate = LocalDate.parse(expirationDateString, formatter);
                         String ccv2 = getInputData("ccv2");
                         CreditCard creditCard = creditCardService.findByUniqId(creditCardNumber);
-                        CreditCard updateCreditCard = null;
                         if (creditCard != null) {
                             if (!(loanType.equals("Education") || loanType.equals("Tuition")
                                     || loanType.equals("Housing"))) {
@@ -90,7 +96,6 @@ public class RepaymentMenu {
                                     ccv2 = getInputData("ccv2");
                                     creditCard.setExpirationDate(expirationDate);
                                     creditCard.setCCV2(ccv2);
-                                    updateCreditCard = creditCardService.update(creditCard);
                                 }
                                 break;
                             }
