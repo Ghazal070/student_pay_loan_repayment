@@ -10,6 +10,7 @@ import menu.util.Input;
 import menu.util.Message;
 import service.CityService;
 import service.StudentService;
+import service.UniversityService;
 import util.AuthHolder;
 
 public class Signup {
@@ -19,14 +20,16 @@ public class Signup {
     private final Signin signin;
     private final AuthHolder authHolder;
     private final CityService cityService;
+    private final UniversityService universityService;
 
-    public Signup(Input input, StudentService studentService, Message message, Signin signin, AuthHolder authHolder, CityService cityService) {
+    public Signup(Input input, StudentService studentService, Message message, Signin signin, AuthHolder authHolder, CityService cityService, UniversityService universityService) {
         this.input = input;
         this.studentService = studentService;
         this.message = message;
         this.signin = signin;
         this.authHolder = authHolder;
         this.cityService = cityService;
+        this.universityService = universityService;
     }
 
     public void show() {
@@ -50,6 +53,7 @@ public class Signup {
                         String birthDate = getInputData("Birth date must be in the format YYYY-MM-DD");
                         String entryYear = getInputData("entryYear(1402)");
                         String universityName = getInputData("UniversityName");
+                        University university =universityService.findByUniqId(universityName);
                         String isDormitory = getInputData("isDormitory (yes/no)");
                         Boolean isDormitoryBoolean = getYesNo(isDormitory);
                         String cityName = getInputData("city Name");
@@ -72,7 +76,13 @@ public class Signup {
                             break;
                         }
                         if (city==null){
-                            city= City.builder().name(cityName).build();
+                            city= City.builder().name(cityName).isBigCity(false).build();
+                        }
+                        if (university==null || !university.getUniversityType().equals(universityType)){
+                            university=University.builder()
+                                    .name(universityName)
+                                    .universityType(universityType)
+                                    .build();
                         }
                         Student student = Student.builder()
                                 .firstName(firstname)
@@ -87,10 +97,7 @@ public class Signup {
                                 .entryYear(Integer.valueOf(entryYear))
                                 .isDormitory(isDormitoryBoolean)
                                 .city(city)
-                                .university(University.builder()
-                                        .name(universityName)
-                                        .universityType(universityType)
-                                        .build())
+                                .university(university)
                                 .build();
 
                         Student saveStudent = studentService.save(student);

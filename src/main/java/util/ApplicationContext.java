@@ -40,6 +40,8 @@ public class ApplicationContext {
         StudentService studentService = new StudentServiceImpl(studentRepository, authHolder);
         LoanRepository loanRepository =new LoanRepositoryImpl(em, authHolder);
         LoanService loanService =new LoanServiceImpl(loanRepository);
+        UniversityRepository universityRepository= new UniversityRepositoryImpl(em);
+        UniversityService universityService = new UniversityServiceImpl(universityRepository);
         TuitionLoanRepository tuitionLoanRepository = new TuitionLoanRepositoryImpl(em,authHolder);
         TuitionLoanService tuitionLoanService =new TuitionLoanServiceImpl(tuitionLoanRepository,termService,loanService, authHolder, studentService);
         CreditCardRepository creditCardRepository = new CreditCardRepositoryImpl(em);
@@ -53,7 +55,7 @@ public class ApplicationContext {
                 educationLoanService, bankService, creditCardService, tuitionLoanService, housingLoanService, installmentService);
         RepaymentMenu repaymentMenu = new RepaymentMenu(input,message, installmentService, creditCardService, loanService, authHolder);
         Signin signin =new Signin(input,message,studentService,authHolder, registerLoanMenu, repaymentMenu);
-        Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService);
+        Signup signup =new Signup(input,studentService,message, signin, authHolder, cityService, universityService);
         menu = new Menu(input, message, signup, signin, studentService, authHolder);
 
     }
@@ -108,7 +110,7 @@ public class ApplicationContext {
                 City.builder().name("Isfahan").isBigCity(true).build()
         );
         cityService.save(
-                City.builder().name("Natanz").build()
+                City.builder().name("Natanz").isBigCity(false).build()
         );
     }
     public void createBank(){

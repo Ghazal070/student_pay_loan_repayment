@@ -20,5 +20,6 @@ public class City extends BaseEntity<Integer> {
     private String name;
 
     @Column
+//todo    @Column(columnDefinition = "boolean default false")
     private Boolean isBigCity;
 }

@@ -10,7 +10,7 @@ public class App {
 
        ApplicationContext.getINSTANCE().getMenu().show();
        // ApplicationContext.getINSTANCE().createTerm();
-        //ApplicationContext.getINSTANCE().createCity();
+       //ApplicationContext.getINSTANCE().createCity();
  //       ApplicationContext.getINSTANCE().createBank();
 
     }

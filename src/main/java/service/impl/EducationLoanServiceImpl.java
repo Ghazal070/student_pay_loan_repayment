@@ -38,25 +38,27 @@ private final LoanService loanService;
         }
         return false;
     }
+
+
     @Override
     public Integer loanAmount(Student student) {
-        Integer amount =null;
+        Integer amount = null;
         switch (student.getDegree()) {
             case Associate:
             case ContinuousBachelor:
             case DiscontinuousBachelor: {
-                amount = 1_300_000;
+                amount = 1_900_000;
                 break;
             }
             case DiscontinuousMaster:
             case ContinuousMaster:
             case ContinuousPhD:
             case DisContinuousPhD: {
-                amount = 2_600_000;
+                amount = 2_250_000;
                 break;
             }
-            case ProfessionalPHD:{
-                amount = 6_500_000;
+            case ProfessionalPHD: {
+                amount = 2_600_000;
                 break;
             }
 
