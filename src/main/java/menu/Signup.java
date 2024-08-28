@@ -44,11 +44,11 @@ public class Signup {
                         String lastname = getInputData("lastname");
                         String fatherName = getInputData("fatherName");
                         String motherName = getInputData("motherName");
-                        String nationalCode = getInputData("nationalCode");
-                        String certificateNumber = getInputData("certificateNumber");
-                        String studentNumber = getInputData("studentNumber");
+                        String nationalCode = getInputData("nationalCode(3 digits)");
+                        String certificateNumber = getInputData("certificateNumber(must be between 1 and 8)");
+                        String studentNumber = getInputData("studentNumber(3 digits)");
                         String birthDate = getInputData("Birth date must be in the format YYYY-MM-DD");
-                        String entryYear = getInputData("entryYear(1990)");
+                        String entryYear = getInputData("entryYear(1402)");
                         String universityName = getInputData("UniversityName");
                         String isDormitory = getInputData("isDormitory (yes/no)");
                         Boolean isDormitoryBoolean = getYesNo(isDormitory);
