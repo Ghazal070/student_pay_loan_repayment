@@ -39,7 +39,7 @@ public class BaseEntityServiceImpl<U extends BaseEntityRepository<T, ID>
             } else {
                 return existEntity;
             }
-        } catch (ConstraintViolationException e) {
+        } catch (ValidationException e) {
             throw new ValidationException("Validation failed: " + e.getMessage(), e);
         } catch (EntityExistsException e) {
             throw new RuntimeException("Entity already exists: " + e.getMessage(), e);
@@ -50,6 +50,8 @@ public class BaseEntityServiceImpl<U extends BaseEntityRepository<T, ID>
 
 
     }
+
+
 
     @Override
     public T update(T newEntity) {

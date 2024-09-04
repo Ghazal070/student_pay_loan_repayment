@@ -65,11 +65,11 @@ public class Student extends BaseEntity<Integer>{
     @Max(value = 1404,message = "start year must be smaller than or equal to {value}")
     private Integer entryYear;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private University university;
 
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private City city;
 
     @Column

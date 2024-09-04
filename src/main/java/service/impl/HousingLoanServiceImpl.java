@@ -41,7 +41,7 @@ public class HousingLoanServiceImpl extends LoanServiceImpl<HousingLoanRepositor
                     if (partnerStudent == null || repository.getHousingLoan(partnerStudent).size() == 0) {
                         return true;
                     }
-                }
+                }else return true;
             }
         }
         return false;

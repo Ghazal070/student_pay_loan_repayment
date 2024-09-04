@@ -214,12 +214,14 @@ public class RegisterLoanMenu {
                 case "3": {
                     try {
                         String isMarried = getInputData("isMarried (yes/no)");
-                        String partnerNationalCode = getInputData("partnerNationalCode");
+                        if (isMarried.equals("yes")) {
+                            String partnerNationalCode = getInputData("partnerNationalCode");
+                            student.setPartnerNationalCode(partnerNationalCode);
+                        }
 
                         String address = getInputData("address");
                         String contractNumber = getInputData("contractNumber");
                         student.setIsMarried(getYesNo(isMarried));
-                        student.setPartnerNationalCode(partnerNationalCode);
                         student.setAddress(address);
                         student.setContractNumber(contractNumber);
                         Student updateStudent = studentService.update(student);
@@ -286,7 +288,7 @@ public class RegisterLoanMenu {
                     } catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {
-                        System.out.println("An unexpected error occurred: " + e.getMessage());
+                        System.out.println("An unexpected error occurred: " + e.getCause());
                     }
                     break;
                 }

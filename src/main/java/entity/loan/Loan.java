@@ -15,9 +15,12 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"student", "term","dtype"})
-})
+//todo ask ostad
+//@Table(
+//        uniqueConstraints = {
+////        @UniqueConstraint(columnNames = {"student", "term","dtype"})
+//})
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @NoArgsConstructor

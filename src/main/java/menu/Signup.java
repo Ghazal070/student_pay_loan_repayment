@@ -115,7 +115,7 @@ public class Signup {
                     catch (ValidationException e) {
                         System.out.println("Error: " + e.getMessage());
                     } catch (RuntimeException e) {
-                        System.out.println("An unexpected error occurred: " + e.getMessage());
+                        System.out.println("An unexpected error occurred: " + e.getCause().getCause());
                     }
                     break;
                 }
